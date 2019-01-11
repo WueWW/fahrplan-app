@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
-import { Button } from 'semantic-ui-react';
 import './App.css';
 import 'semantic-ui-css/semantic.css';
+
+import React, { Component } from 'react';
+import { Button } from 'semantic-ui-react';
 
 class App extends Component {
     render() {
