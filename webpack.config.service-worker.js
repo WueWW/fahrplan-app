@@ -10,4 +10,11 @@ module.exports = isProdBuild =>
 
         clientsClaim: true,
         skipWaiting: true,
+
+        runtimeCaching: [
+            {
+                urlPattern: new RegExp('sessions.json'),
+                handler: 'staleWhileRevalidate',
+            },
+        ],
     });
