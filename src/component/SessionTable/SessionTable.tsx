@@ -10,7 +10,7 @@ export interface Props {
 const SessionTable: React.FunctionComponent<Props> = props => (
     <ul>
         {props.sessions.map(session => (
-            <SessionComponent {...session} />
+            <SessionComponent key={session.id} {...session} />
         ))}
     </ul>
 );

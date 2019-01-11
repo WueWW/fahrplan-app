@@ -1,9 +1,11 @@
 {
     "sessions": [
         {
+            "id": "foo",
             "title": "eine erste Session"
         },
         {
+            "id": "bar",
             "title": "tolle zweite Session"
         }
     ]
