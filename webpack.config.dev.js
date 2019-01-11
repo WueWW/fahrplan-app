@@ -1,6 +1,7 @@
 const merge = require('webpack-merge');
 const common = require('./webpack.config.common.js');
 const path = require('path');
+const serviceWorkerConfig = require('./webpack.config.service-worker');
 
 module.exports = merge(common, {
     mode: 'development',
@@ -11,4 +12,5 @@ module.exports = merge(common, {
         overlay: true,
         contentBase: path.join(__dirname, 'public'),
     },
+    plugins: [serviceWorkerConfig(false)],
 });
