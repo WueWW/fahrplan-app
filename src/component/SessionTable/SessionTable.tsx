@@ -1,4 +1,5 @@
 import React from 'react';
+import { Card } from 'semantic-ui-react';
 
 import { Session } from '../../model/Session';
 import SessionComponent from './Session';
@@ -8,11 +9,11 @@ export interface Props {
 }
 
 const SessionTable: React.FunctionComponent<Props> = props => (
-    <ul>
+    <Card.Group centered>
         {props.sessions.map(session => (
             <SessionComponent key={session.id} {...session} />
         ))}
-    </ul>
+    </Card.Group>
 );
 
 export default SessionTable;
