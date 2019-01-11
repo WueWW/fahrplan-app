@@ -1,12 +1,10 @@
 const WorkboxWebpackPlugin = require('workbox-webpack-plugin');
 
-module.exports = isProdBuild =>
-    new WorkboxWebpackPlugin.GenerateSW({
+module.exports = isProdBuild => {
+    const options = {
         swDest: 'sw.js',
 
-        // use "cdn" in case of dev-build, since the webpack-dev-server doesn't
-        // ship workbox as needed otherwise
-        importWorkboxFrom: isProdBuild ? 'local' : 'cdn',
+        importWorkboxFrom: 'local',
 
         clientsClaim: true,
         skipWaiting: true,
@@ -17,4 +15,16 @@ module.exports = isProdBuild =>
                 handler: 'staleWhileRevalidate',
             },
         ],
-    });
+    };
+
+    if (!isProdBuild) {
+        // use "cdn" in case of dev-build, since the webpack-dev-server doesn't
+        // ship workbox as needed otherwise
+        options.importWorkboxFrom = 'cdn';
+
+        // don't apply pre-caching (during dev) at all
+        options.include = [/this-file-better-not-exists/];
+    }
+
+    return new WorkboxWebpackPlugin.GenerateSW(options);
+};
