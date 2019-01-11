@@ -1,11 +1,11 @@
 {
     "sessions": [
         {
-            "id": "foo",
+            "key": "foo",
             "title": "eine erste Session"
         },
         {
-            "id": "bar",
+            "key": "bar",
             "title": "tolle zweite Session"
         }
     ]
