@@ -9,7 +9,7 @@ export interface Props {
 }
 
 const SessionTable: React.FunctionComponent<Props> = props => (
-    <Card.Group centered>
+    <Card.Group centered doubling itemsPerRow="two">
         {props.sessions.map(session => (
             <SessionComponent {...session} />
         ))}

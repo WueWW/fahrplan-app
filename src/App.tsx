@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button } from 'semantic-ui-react';
+import { Container } from 'semantic-ui-react';
 
 import SessionTable from './component/SessionTable';
 import { Session } from './model/Session';
@@ -32,20 +32,9 @@ class App extends Component<Props, State> {
 
     render() {
         return (
-            <div className="App">
-                <header className="App-header">
-                    {this.state.sessions ? <SessionTable sessions={this.state.sessions} /> : 'still loading data ...'}
-                    <div>
-                        <Button primary={true}>Click Here</Button>
-                    </div>
-                    <p>
-                        Edit <code>src/App.tsx</code> and save to reload.
-                    </p>
-                    <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
-                        Learn React
-                    </a>
-                </header>
-            </div>
+            <Container>
+                {this.state.sessions ? <SessionTable sessions={this.state.sessions} /> : 'still loading data ...'}
+            </Container>
         );
     }
 }
