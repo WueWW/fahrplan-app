@@ -18,7 +18,6 @@ class Session extends React.Component<Props, State> {
     }
 
     handleExpand() {
-        console.log('handleExpand', this.state);
         this.setState(state => ({ expanded: !state.expanded }));
     }
 
@@ -26,7 +25,7 @@ class Session extends React.Component<Props, State> {
         return (
             <Card>
                 <Card.Content>
-                    <Card.Header onClick={this.handleExpand}>
+                    <Card.Header onClick={this.handleExpand} style={{ cursor: 'pointer' }}>
                         {this.props.title}
                         <span className="right floated">
                             <Icon name={this.state.expanded ? 'chevron down' : 'chevron right'} />
