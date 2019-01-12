@@ -26,11 +26,11 @@ class Session extends React.Component<Props, State> {
         return (
             <Card>
                 <Card.Content>
-                    <Card.Header>
+                    <Card.Header onClick={this.handleExpand}>
                         {this.props.title}
-                        <a className="right floated" onClick={this.handleExpand}>
+                        <span className="right floated">
                             <Icon name={this.state.expanded ? 'chevron down' : 'chevron right'} />
-                        </a>
+                        </span>
                     </Card.Header>
                     <Card.Meta>wird schon wer machen</Card.Meta>
                     {this.state.expanded && (
