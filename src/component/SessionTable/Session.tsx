@@ -26,7 +26,6 @@ class Session extends React.Component<Props, State> {
     }
 
     handleExpand() {
-        console.log('handleExpand', this.state);
         this.setState(state => ({ expanded: !state.expanded }));
     }
 
