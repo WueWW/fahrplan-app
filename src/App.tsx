@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Hammer from 'react-hammerjs';
 import { Icon, Message } from 'semantic-ui-react';
 
 import Header from './component/Header';
@@ -43,6 +44,7 @@ class App extends Component<Props, State> {
         };
 
         this.onDateSelected = this.onDateSelected.bind(this);
+        this.onSwipe = this.onSwipe.bind(this);
     }
 
     async componentDidMount() {
@@ -62,6 +64,44 @@ class App extends Component<Props, State> {
 
     onDateSelected(selectedDate: string) {
         this.setState({ selectedDate });
+    }
+
+    onSwipe(event: HammerInput) {
+        if (event.deltaX < 0) {
+            this.onSwipeLeft();
+        } else {
+            this.onSwipeRight();
+        }
+    }
+
+    onSwipeLeft() {
+        if (!this.state.sessions) {
+            throw new Error('received swipe, but no session data available');
+        }
+
+        // load next day (if any)
+        const dates = Object.keys(partitionByDate(this.state.sessions));
+        let index = dates.findIndex(value => value === this.state.selectedDate);
+
+        index++;
+
+        if (index < dates.length) {
+            this.setState({ selectedDate: dates[index] });
+        }
+    }
+
+    onSwipeRight() {
+        if (!this.state.sessions) {
+            throw new Error('received swipe, but no session data available');
+        }
+
+        // load next day (if any)
+        const dates = Object.keys(partitionByDate(this.state.sessions));
+        const index = dates.findIndex(value => value === this.state.selectedDate);
+
+        if (index > 0) {
+            this.setState({ selectedDate: dates[index - 1] });
+        }
     }
 
     render() {
@@ -98,12 +138,17 @@ class App extends Component<Props, State> {
         return (
             <>
                 <Header />
-                <SessionDatePicker
-                    options={Object.keys(partitionedSessions)}
-                    selectedDate={this.state.selectedDate}
-                    onDateSelected={this.onDateSelected}
-                />
-                <SessionTable sessions={partitionedSessions[this.state.selectedDate]} />
+
+                <Hammer direction="DIRECTION_HORIZONTAL" onSwipe={this.onSwipe}>
+                    <div>
+                        <SessionDatePicker
+                            options={Object.keys(partitionedSessions)}
+                            selectedDate={this.state.selectedDate}
+                            onDateSelected={this.onDateSelected}
+                        />
+                        <SessionTable sessions={partitionedSessions[this.state.selectedDate]} />
+                    </div>
+                </Hammer>
             </>
         );
     }
