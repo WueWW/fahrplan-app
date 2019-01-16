@@ -22,7 +22,7 @@ class Session extends React.Component<Props, State> {
     }
 
     isExpandable() {
-        return this.props.long_description || this.props.location;
+        return this.props.short_description || this.props.long_description || this.props.location;
     }
 
     handleExpand() {
@@ -43,9 +43,11 @@ class Session extends React.Component<Props, State> {
                     </Card.Header>
                     <Card.Meta>{this.props.host}</Card.Meta>
                 </Card.Content>
-                {this.state.expanded && this.props.long_description && (
+                {this.state.expanded && (this.props.short_description || this.props.long_description) && (
                     <Card.Content extra>
-                        <Card.Description>{this.props.long_description}</Card.Description>
+                        <Card.Description>
+                            {this.props.long_description || this.props.short_description}
+                        </Card.Description>
                     </Card.Content>
                 )}
                 {this.state.expanded && this.props.location && (
