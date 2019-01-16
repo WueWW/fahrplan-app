@@ -22,7 +22,7 @@ class Session extends React.Component<Props, State> {
     }
 
     isExpandable() {
-        return this.props.short_description || this.props.long_description;
+        return this.props.short_description || this.props.long_description || this.props.location;
     }
 
     handleExpand() {
