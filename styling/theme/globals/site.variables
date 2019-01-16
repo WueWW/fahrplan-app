@@ -1,4 +1,4 @@
 @importGoogleFonts : false;
 
-@emSize: 18px;
-@fontSize : 18px;
+@emSize: 22px;
+@fontSize : 22px;
