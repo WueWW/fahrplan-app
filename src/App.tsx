@@ -1,13 +1,33 @@
 import React, { Component } from 'react';
-import { Container } from 'semantic-ui-react';
 
+import SessionDatePicker from './component/SessionDatePicker';
 import SessionTable from './component/SessionTable';
 import { Session } from './model/Session';
 
 export interface Props {}
 
 export interface State {
-    sessions?: Session[];
+    sessions?: SessionList;
+    selectedDate?: string;
+}
+
+type SessionList = Session[];
+type PartitionedSessionList = { [key: string]: SessionList };
+
+function extractDate(session: Session): string {
+    return new Date(session.start).toISOString().substr(0, 10);
+}
+
+function partitionByDate(sessions: SessionList): PartitionedSessionList {
+    return sessions.reduce(
+        (acc: PartitionedSessionList, session) => {
+            const key = extractDate(session);
+            acc[key] = acc[key] || [];
+            acc[key].push(session);
+            return acc;
+        },
+        {} as PartitionedSessionList
+    );
 }
 
 class App extends Component<Props, State> {
@@ -17,6 +37,8 @@ class App extends Component<Props, State> {
         this.state = {
             sessions: undefined,
         };
+
+        this.onDateSelected = this.onDateSelected.bind(this);
     }
 
     async componentDidMount() {
@@ -27,14 +49,33 @@ class App extends Component<Props, State> {
             throw new Error('sessions data malformed');
         }
 
-        this.setState({ sessions: data.sessions });
+        this.setState({ sessions: data.sessions, selectedDate: Object.keys(partitionByDate(data.sessions))[0] });
+    }
+
+    onDateSelected(selectedDate: string) {
+        this.setState({ selectedDate });
     }
 
     render() {
+        if (!this.state.sessions) {
+            return 'still loading data ...';
+        }
+
+        if (!this.state.selectedDate) {
+            throw Error('selectedDate not set, but sessions are loaded');
+        }
+
+        const partitionedSessions = partitionByDate(this.state.sessions);
+
         return (
-            <Container>
-                {this.state.sessions ? <SessionTable sessions={this.state.sessions} /> : 'still loading data ...'}
-            </Container>
+            <>
+                <SessionDatePicker
+                    options={Object.keys(partitionedSessions)}
+                    selectedDate={this.state.selectedDate}
+                    onDateSelected={this.onDateSelected}
+                />
+                <SessionTable sessions={partitionedSessions[this.state.selectedDate]} />
+            </>
         );
     }
 }
