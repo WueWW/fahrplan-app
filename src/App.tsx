@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+import Header from './component/Header';
 import SessionDatePicker from './component/SessionDatePicker';
 import SessionTable from './component/SessionTable';
 import { Session } from './model/Session';
@@ -69,6 +70,7 @@ class App extends Component<Props, State> {
 
         return (
             <>
+                <Header />
                 <SessionDatePicker
                     options={Object.keys(partitionedSessions)}
                     selectedDate={this.state.selectedDate}
