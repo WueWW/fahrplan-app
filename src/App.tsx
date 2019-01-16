@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Icon, Message } from 'semantic-ui-react';
 
 import Header from './component/Header';
 import SessionDatePicker from './component/SessionDatePicker';
@@ -8,6 +9,7 @@ import { Session } from './model/Session';
 export interface Props {}
 
 export interface State {
+    initFailed: boolean;
     sessions?: SessionList;
     selectedDate?: string;
 }
@@ -36,6 +38,7 @@ class App extends Component<Props, State> {
         super(props);
 
         this.state = {
+            initFailed: false,
             sessions: undefined,
         };
 
@@ -43,14 +46,18 @@ class App extends Component<Props, State> {
     }
 
     async componentDidMount() {
-        const response = await fetch('sessions.json');
-        const data = await response.json();
+        try {
+            const response = await fetch('sessions.json');
+            const data = await response.json();
 
-        if (typeof data !== 'object' || !(data.sessions instanceof Array)) {
-            throw new Error('sessions data malformed');
+            if (typeof data !== 'object' || !(data.sessions instanceof Array)) {
+                throw new Error('sessions data malformed');
+            }
+
+            this.setState({ sessions: data.sessions, selectedDate: Object.keys(partitionByDate(data.sessions))[0] });
+        } catch (e) {
+            this.setState({ initFailed: true });
         }
-
-        this.setState({ sessions: data.sessions, selectedDate: Object.keys(partitionByDate(data.sessions))[0] });
     }
 
     onDateSelected(selectedDate: string) {
@@ -58,8 +65,28 @@ class App extends Component<Props, State> {
     }
 
     render() {
+        if (this.state.initFailed) {
+            return (
+                <Message icon negative>
+                    <Icon name="warning sign" />
+                    <Message.Content>
+                        <Message.Header>Fehler beim Laden der Sessiondaten</Message.Header>
+                        <p>Die Sessiondaten konnten leider nicht geladen werden. Sorry ¯\_(ツ)_/¯</p>
+                    </Message.Content>
+                </Message>
+            );
+        }
+
         if (!this.state.sessions) {
-            return 'still loading data ...';
+            return (
+                <Message icon>
+                    <Icon name="circle notched" loading />
+                    <Message.Content>
+                        <Message.Header>Einen Moment bitte...</Message.Header>
+                        Die Sessiondaten werden gerade geladen.
+                    </Message.Content>
+                </Message>
+            );
         }
 
         if (!this.state.selectedDate) {
