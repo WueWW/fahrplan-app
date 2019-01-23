@@ -3,8 +3,8 @@ import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 
 import Header from './component/Header';
 import InitStatusIndicatorOrApp from './component/InitStatusIndicatorOrApp';
-import SessionViewer from './component/SessionViewer';
 import AppState, { InitStatus } from './model/AppState';
+import SessionViewer from './page/SessionViewer';
 
 export interface Props {}
 

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import Hammer from 'react-hammerjs';
 
+import SessionDatePicker from '../component/SessionDatePicker';
+import SessionTable from '../component/SessionTable';
 import { Session, SessionList } from '../model/Session';
-import SessionDatePicker from './SessionDatePicker';
-import SessionTable from './SessionTable';
 
 export interface Props {
     sessions: SessionList;
