@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 
 import Header from './component/Header';
 import InitStatusIndicatorOrApp from './component/InitStatusIndicatorOrApp';
@@ -41,7 +42,13 @@ class App extends Component<Props, AppState> {
             <Fragment>
                 <Header />
                 <InitStatusIndicatorOrApp {...this.state}>
-                    {sessions => <SessionViewer sessions={sessions} />}
+                    {sessions => (
+                        <Router>
+                            <Switch>
+                                <Route path="/" component={() => <SessionViewer sessions={sessions} />} />
+                            </Switch>
+                        </Router>
+                    )}
                 </InitStatusIndicatorOrApp>
             </Fragment>
         );
