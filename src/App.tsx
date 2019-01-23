@@ -58,7 +58,10 @@ class App extends Component<Props, State> {
                 throw new Error('sessions data malformed');
             }
 
-            this.setState({ sessions: data.sessions, selectedDate: Object.keys(partitionByDate(data.sessions))[0] });
+            this.setState({
+                sessions: data.sessions,
+                selectedDate: Object.keys(partitionByDate(data.sessions)).sort()[0],
+            });
         } catch (e) {
             this.setState({ initFailed: true });
         }
@@ -82,7 +85,7 @@ class App extends Component<Props, State> {
         }
 
         // load next day (if any)
-        const dates = Object.keys(partitionByDate(this.state.sessions));
+        const dates = Object.keys(partitionByDate(this.state.sessions)).sort();
         let index = dates.findIndex(value => value === this.state.selectedDate);
 
         index++;
@@ -98,7 +101,7 @@ class App extends Component<Props, State> {
         }
 
         // load next day (if any)
-        const dates = Object.keys(partitionByDate(this.state.sessions));
+        const dates = Object.keys(partitionByDate(this.state.sessions)).sort();
         const index = dates.findIndex(value => value === this.state.selectedDate);
 
         if (index > 0) {
@@ -144,7 +147,7 @@ class App extends Component<Props, State> {
                 <Hammer direction="DIRECTION_HORIZONTAL" onSwipe={this.onSwipe}>
                     <div>
                         <SessionDatePicker
-                            options={Object.keys(partitionedSessions)}
+                            options={Object.keys(partitionedSessions).sort()}
                             selectedDate={this.state.selectedDate}
                             onDateSelected={this.onDateSelected}
                         />
