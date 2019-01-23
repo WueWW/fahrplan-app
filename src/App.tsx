@@ -4,6 +4,7 @@ import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import Header from './component/Header';
 import InitStatusIndicatorOrApp from './component/InitStatusIndicatorOrApp';
 import AppState, { InitStatus } from './model/AppState';
+import InfoPage from './page/InfoPage';
 import SessionViewer from './page/SessionViewer';
 
 export interface Props {}
@@ -45,6 +46,7 @@ class App extends Component<Props, AppState> {
                     {sessions => (
                         <Router>
                             <Switch>
+                                <Route path="/info" component={() => <InfoPage />} />
                                 <Route path="/" component={() => <SessionViewer sessions={sessions} />} />
                             </Switch>
                         </Router>
