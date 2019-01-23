@@ -1,26 +1,15 @@
-import React, { Component } from 'react';
-import { Icon, Message } from 'semantic-ui-react';
+import React, { Component, Fragment } from 'react';
 
 import Header from './component/Header';
+import InitStatusIndicatorOrApp from './component/InitStatusIndicatorOrApp';
 import SessionViewer from './component/SessionViewer';
-import { SessionList } from './model/Session';
-
-export enum InitStatus {
-    FetchingSessionData,
-    InitializationFailed,
-    InitializationComplete,
-}
+import AppState, { InitStatus } from './model/AppState';
 
 export interface Props {}
 
-export type State =
-    | { status: InitStatus.FetchingSessionData }
-    | { status: InitStatus.InitializationFailed }
-    | { status: InitStatus.InitializationComplete; sessions: SessionList };
-
 const SESSION_DATA_URL = 'https://wueww.github.io/fahrplan-2019/sessions.json';
 
-class App extends Component<Props, State> {
+class App extends Component<Props, AppState> {
     constructor(props: Props) {
         super(props);
 
@@ -48,35 +37,13 @@ class App extends Component<Props, State> {
     }
 
     render() {
-        if (this.state.status === InitStatus.InitializationFailed) {
-            return (
-                <Message icon negative>
-                    <Icon name="warning sign" />
-                    <Message.Content>
-                        <Message.Header>Fehler beim Laden der Sessiondaten</Message.Header>
-                        <p>Die Sessiondaten konnten leider nicht geladen werden. Sorry ¯\_(ツ)_/¯</p>
-                    </Message.Content>
-                </Message>
-            );
-        }
-
-        if (this.state.status === InitStatus.FetchingSessionData) {
-            return (
-                <Message icon>
-                    <Icon name="circle notched" loading />
-                    <Message.Content>
-                        <Message.Header>Einen Moment bitte...</Message.Header>
-                        Die Sessiondaten werden gerade geladen.
-                    </Message.Content>
-                </Message>
-            );
-        }
-
         return (
-            <>
+            <Fragment>
                 <Header />
-                <SessionViewer sessions={this.state.sessions} />
-            </>
+                <InitStatusIndicatorOrApp {...this.state}>
+                    {sessions => <SessionViewer sessions={sessions} />}
+                </InitStatusIndicatorOrApp>
+            </Fragment>
         );
     }
 }
