@@ -34,6 +34,8 @@ function partitionByDate(sessions: SessionList): PartitionedSessionList {
     );
 }
 
+const SESSION_DATA_URL = 'https://wueww.github.io/fahrplan-2019/sessions.json';
+
 class App extends Component<Props, State> {
     constructor(props: Props) {
         super(props);
@@ -49,7 +51,7 @@ class App extends Component<Props, State> {
 
     async componentDidMount() {
         try {
-            const response = await fetch('sessions.json');
+            const response = await fetch(SESSION_DATA_URL);
             const data = await response.json();
 
             if (typeof data !== 'object' || !(data.sessions instanceof Array)) {

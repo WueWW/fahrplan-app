@@ -21,8 +21,12 @@ class Session extends React.Component<Props, State> {
         this.handleExpand = this.handleExpand.bind(this);
     }
 
-    isExpandable() {
-        return this.props.short_description || this.props.long_description || this.props.location;
+    description(): string | undefined {
+        return this.props.description && (this.props.description.short || this.props.description.long);
+    }
+
+    isExpandable(): boolean {
+        return this.description() !== undefined || (this.props.location && this.props.location.name) !== undefined;
     }
 
     handleExpand() {
@@ -41,20 +45,18 @@ class Session extends React.Component<Props, State> {
                         )}
                         {this.props.title}
                     </Card.Header>
-                    <Card.Meta>{this.props.host}</Card.Meta>
+                    <Card.Meta>{this.props.host.name}</Card.Meta>
                 </Card.Content>
-                {this.state.expanded && (this.props.short_description || this.props.long_description) && (
+                {this.state.expanded && this.description() && (
                     <Card.Content extra>
-                        <Card.Description>
-                            {this.props.long_description || this.props.short_description}
-                        </Card.Description>
+                        <Card.Description>{this.description()}</Card.Description>
                     </Card.Content>
                 )}
-                {this.state.expanded && this.props.location && (
+                {this.state.expanded && this.props.location && this.props.location.name && (
                     <Card.Content extra>
                         <Card.Description>
                             <Icon name="globe" />
-                            {this.props.location}
+                            {this.props.location.name}
                         </Card.Description>
                     </Card.Content>
                 )}
