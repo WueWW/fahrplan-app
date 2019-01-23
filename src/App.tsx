@@ -47,7 +47,16 @@ class App extends Component<Props, AppState> {
                         <Router>
                             <Switch>
                                 <Route path="/info" component={() => <InfoPage />} />
-                                <Route path="/" component={() => <SessionViewer sessions={sessions} />} />
+                                <Route
+                                    path="/:date?"
+                                    component={(route: any) => (
+                                        <SessionViewer
+                                            {...route}
+                                            selectedDate={route.match.params.date}
+                                            sessions={sessions}
+                                        />
+                                    )}
+                                />
                             </Switch>
                         </Router>
                     )}

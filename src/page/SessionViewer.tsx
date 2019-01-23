@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
 import Hammer from 'react-hammerjs';
+import { RouteComponentProps } from 'react-router';
 
 import SessionDatePicker from '../component/SessionDatePicker';
 import SessionTable from '../component/SessionTable';
 import { Session, SessionList } from '../model/Session';
 
-export interface Props {
+export interface Props extends RouteComponentProps<any> {
     sessions: SessionList;
+    selectedDate?: string;
 }
 
-export interface State {
-    selectedDate: string;
-}
+export interface State {}
 
 class SessionViewer extends Component<Props, State> {
     constructor(props: Props) {
@@ -19,13 +19,18 @@ class SessionViewer extends Component<Props, State> {
 
         this.onDateSelected = this.onDateSelected.bind(this);
         this.onSwipe = this.onSwipe.bind(this);
-        this.state = {
-            selectedDate: Object.keys(Session.partitionByDate(props.sessions)).sort()[0],
-        };
+    }
+
+    selectedDate() {
+        return this.props.selectedDate || this.defaultDate();
+    }
+
+    defaultDate() {
+        return Object.keys(Session.partitionByDate(this.props.sessions)).sort()[0];
     }
 
     onDateSelected(selectedDate: string) {
-        this.setState({ selectedDate });
+        this.props.history.push(`/${selectedDate}`);
     }
 
     onSwipe(event: HammerInput) {
@@ -39,22 +44,22 @@ class SessionViewer extends Component<Props, State> {
     onSwipeLeft() {
         // load next day (if any)
         const dates = Object.keys(Session.partitionByDate(this.props.sessions)).sort();
-        let index = dates.findIndex(value => value === this.state.selectedDate);
+        let index = dates.findIndex(value => value === this.selectedDate());
 
         index++;
 
         if (index < dates.length) {
-            this.setState({ selectedDate: dates[index] });
+            this.onDateSelected(dates[index]);
         }
     }
 
     onSwipeRight() {
         // load next day (if any)
         const dates = Object.keys(Session.partitionByDate(this.props.sessions)).sort();
-        const index = dates.findIndex(value => value === this.state.selectedDate);
+        const index = dates.findIndex(value => value === this.selectedDate());
 
         if (index > 0) {
-            this.setState({ selectedDate: dates[index - 1] });
+            this.onDateSelected(dates[index - 1]);
         }
     }
 
@@ -66,10 +71,10 @@ class SessionViewer extends Component<Props, State> {
                 <div>
                     <SessionDatePicker
                         options={Object.keys(partitionedSessions).sort()}
-                        selectedDate={this.state.selectedDate}
+                        selectedDate={this.selectedDate()}
                         onDateSelected={this.onDateSelected}
                     />
-                    <SessionTable sessions={partitionedSessions[this.state.selectedDate]} />
+                    <SessionTable sessions={partitionedSessions[this.selectedDate()]} />
                 </div>
             </Hammer>
         );
