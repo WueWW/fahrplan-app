@@ -5,12 +5,18 @@ import Header from './component/Header';
 import SessionViewer from './component/SessionViewer';
 import { SessionList } from './model/Session';
 
+export enum InitStatus {
+    FetchingSessionData,
+    InitializationFailed,
+    InitializationComplete,
+}
+
 export interface Props {}
 
-export interface State {
-    initFailed: boolean;
-    sessions?: SessionList;
-}
+export type State =
+    | { status: InitStatus.FetchingSessionData }
+    | { status: InitStatus.InitializationFailed }
+    | { status: InitStatus.InitializationComplete; sessions: SessionList };
 
 const SESSION_DATA_URL = 'https://wueww.github.io/fahrplan-2019/sessions.json';
 
@@ -19,8 +25,7 @@ class App extends Component<Props, State> {
         super(props);
 
         this.state = {
-            initFailed: false,
-            sessions: undefined,
+            status: InitStatus.FetchingSessionData,
         };
     }
 
@@ -34,15 +39,16 @@ class App extends Component<Props, State> {
             }
 
             this.setState({
+                status: InitStatus.InitializationComplete,
                 sessions: data.sessions,
             });
         } catch (e) {
-            this.setState({ initFailed: true });
+            this.setState({ status: InitStatus.InitializationFailed });
         }
     }
 
     render() {
-        if (this.state.initFailed) {
+        if (this.state.status === InitStatus.InitializationFailed) {
             return (
                 <Message icon negative>
                     <Icon name="warning sign" />
@@ -54,7 +60,7 @@ class App extends Component<Props, State> {
             );
         }
 
-        if (!this.state.sessions) {
+        if (this.state.status === InitStatus.FetchingSessionData) {
             return (
                 <Message icon>
                     <Icon name="circle notched" loading />
