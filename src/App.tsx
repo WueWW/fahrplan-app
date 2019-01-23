@@ -1,37 +1,15 @@
 import React, { Component } from 'react';
-import Hammer from 'react-hammerjs';
 import { Icon, Message } from 'semantic-ui-react';
 
 import Header from './component/Header';
-import SessionDatePicker from './component/SessionDatePicker';
-import SessionTable from './component/SessionTable';
-import { Session } from './model/Session';
+import SessionViewer from './component/SessionViewer';
+import { SessionList } from './model/Session';
 
 export interface Props {}
 
 export interface State {
     initFailed: boolean;
     sessions?: SessionList;
-    selectedDate?: string;
-}
-
-type SessionList = Session[];
-type PartitionedSessionList = { [key: string]: SessionList };
-
-function extractDate(session: Session): string {
-    return new Date(session.start).toISOString().substr(0, 10);
-}
-
-function partitionByDate(sessions: SessionList): PartitionedSessionList {
-    return sessions.reduce(
-        (acc: PartitionedSessionList, session) => {
-            const key = extractDate(session);
-            acc[key] = acc[key] || [];
-            acc[key].push(session);
-            return acc;
-        },
-        {} as PartitionedSessionList
-    );
 }
 
 const SESSION_DATA_URL = 'https://wueww.github.io/fahrplan-2019/sessions.json';
@@ -44,9 +22,6 @@ class App extends Component<Props, State> {
             initFailed: false,
             sessions: undefined,
         };
-
-        this.onDateSelected = this.onDateSelected.bind(this);
-        this.onSwipe = this.onSwipe.bind(this);
     }
 
     async componentDidMount() {
@@ -60,52 +35,9 @@ class App extends Component<Props, State> {
 
             this.setState({
                 sessions: data.sessions,
-                selectedDate: Object.keys(partitionByDate(data.sessions)).sort()[0],
             });
         } catch (e) {
             this.setState({ initFailed: true });
-        }
-    }
-
-    onDateSelected(selectedDate: string) {
-        this.setState({ selectedDate });
-    }
-
-    onSwipe(event: HammerInput) {
-        if (event.deltaX < 0) {
-            this.onSwipeLeft();
-        } else {
-            this.onSwipeRight();
-        }
-    }
-
-    onSwipeLeft() {
-        if (!this.state.sessions) {
-            throw new Error('received swipe, but no session data available');
-        }
-
-        // load next day (if any)
-        const dates = Object.keys(partitionByDate(this.state.sessions)).sort();
-        let index = dates.findIndex(value => value === this.state.selectedDate);
-
-        index++;
-
-        if (index < dates.length) {
-            this.setState({ selectedDate: dates[index] });
-        }
-    }
-
-    onSwipeRight() {
-        if (!this.state.sessions) {
-            throw new Error('received swipe, but no session data available');
-        }
-
-        // load next day (if any)
-        const dates = Object.keys(partitionByDate(this.state.sessions)).sort();
-        const index = dates.findIndex(value => value === this.state.selectedDate);
-
-        if (index > 0) {
-            this.setState({ selectedDate: dates[index - 1] });
         }
     }
 
@@ -134,26 +66,10 @@ class App extends Component<Props, State> {
             );
         }
 
-        if (!this.state.selectedDate) {
-            throw Error('selectedDate not set, but sessions are loaded');
-        }
-
-        const partitionedSessions = partitionByDate(this.state.sessions);
-
         return (
             <>
                 <Header />
-
-                <Hammer direction="DIRECTION_HORIZONTAL" onSwipe={this.onSwipe}>
-                    <div>
-                        <SessionDatePicker
-                            options={Object.keys(partitionedSessions).sort()}
-                            selectedDate={this.state.selectedDate}
-                            onDateSelected={this.onDateSelected}
-                        />
-                        <SessionTable sessions={partitionedSessions[this.state.selectedDate]} />
-                    </div>
-                </Hammer>
+                <SessionViewer sessions={this.state.sessions} />
             </>
         );
     }
