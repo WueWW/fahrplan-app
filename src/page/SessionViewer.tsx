@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import Hammer from 'react-hammerjs';
 import { RouteComponentProps } from 'react-router';
 
-import { FavManagerProps } from '../component/FavManager';
+import FavManager from '../component/FavManager';
 import SessionDatePicker from '../component/SessionDatePicker';
 import SessionTable from '../component/SessionTable';
 import { Session, SessionList } from '../model/Session';
 
-export interface Props extends FavManagerProps, RouteComponentProps<any> {
+export interface Props extends RouteComponentProps<any> {
     sessions: SessionList;
     selectedDate?: string;
 }
@@ -75,12 +75,9 @@ class SessionViewer extends Component<Props, State> {
                         selectedDate={this.selectedDate()}
                         onDateSelected={this.onDateSelected}
                     />
-                    <SessionTable
-                        sessions={partitionedSessions[this.selectedDate()]}
-                        favorites={this.props.favorites}
-                        addFavorite={this.props.addFavorite}
-                        removeFavorite={this.props.removeFavorite}
-                    />
+                    <FavManager>
+                        {fav => <SessionTable {...fav} sessions={partitionedSessions[this.selectedDate()]} />}
+                    </FavManager>
                 </div>
             </Hammer>
         );

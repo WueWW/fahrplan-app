@@ -40,33 +40,28 @@ class App extends Component<Props, AppState> {
         }
     }
 
-    router(sessions: SessionList, fav: FavManagerProps) {
-        return (
-            <Router>
-                <Switch>
-                    <Route path="/info" component={() => <InfoPage />} />
-                    <Route
-                        path="/:date?"
-                        component={(route: any) => (
-                            <SessionViewer
-                                {...fav}
-                                {...route}
-                                selectedDate={route.match.params.date}
-                                sessions={sessions}
-                            />
-                        )}
-                    />
-                </Switch>
-            </Router>
-        );
-    }
-
     render() {
         return (
             <Fragment>
                 <Header />
                 <InitStatusIndicatorOrApp {...this.state}>
-                    {sessions => <FavManager>{fav => this.router(sessions, fav)}</FavManager>}
+                    {sessions => (
+                        <Router>
+                            <Switch>
+                                <Route path="/info" component={() => <InfoPage />} />
+                                <Route
+                                    path="/:date?"
+                                    component={(route: any) => (
+                                        <SessionViewer
+                                            {...route}
+                                            selectedDate={route.match.params.date}
+                                            sessions={sessions}
+                                        />
+                                    )}
+                                />
+                            </Switch>
+                        </Router>
+                    )}
                 </InitStatusIndicatorOrApp>
             </Fragment>
         );
