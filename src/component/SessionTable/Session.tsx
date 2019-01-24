@@ -3,7 +3,10 @@ import { Card, Icon } from 'semantic-ui-react';
 
 import { Session as SessionType } from '../../model/Session';
 
-export interface Props extends SessionType {}
+export interface Props extends SessionType {
+    isFavorite: boolean;
+    onToggleFavorite: () => void;
+}
 
 export interface State {
     expanded: boolean;
@@ -62,6 +65,7 @@ class Session extends React.Component<Props, State> {
                 )}
 
                 <Card.Content extra>
+                    <Icon className="right floated" name="heart" color={this.props.isFavorite ? 'red' : undefined } onClick={this.props.onToggleFavorite} />
                     <Icon name="clock" />
                     {formatTime(this.props.start)}
                     {this.props.end && ' - ' + formatTime(this.props.end)}

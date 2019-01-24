@@ -1,9 +1,11 @@
 import React, { Component, Fragment } from 'react';
 import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 
+import FavManager, { FavManagerProps } from './component/FavManager';
 import Header from './component/Header';
 import InitStatusIndicatorOrApp from './component/InitStatusIndicatorOrApp';
 import AppState, { InitStatus } from './model/AppState';
+import { SessionList } from './model/Session';
 import InfoPage from './page/InfoPage';
 import SessionViewer from './page/SessionViewer';
 
@@ -38,28 +40,33 @@ class App extends Component<Props, AppState> {
         }
     }
 
+    router(sessions: SessionList, fav: FavManagerProps) {
+        return (
+            <Router>
+                <Switch>
+                    <Route path="/info" component={() => <InfoPage />} />
+                    <Route
+                        path="/:date?"
+                        component={(route: any) => (
+                            <SessionViewer
+                                {...fav}
+                                {...route}
+                                selectedDate={route.match.params.date}
+                                sessions={sessions}
+                            />
+                        )}
+                    />
+                </Switch>
+            </Router>
+        );
+    }
+
     render() {
         return (
             <Fragment>
                 <Header />
                 <InitStatusIndicatorOrApp {...this.state}>
-                    {sessions => (
-                        <Router>
-                            <Switch>
-                                <Route path="/info" component={() => <InfoPage />} />
-                                <Route
-                                    path="/:date?"
-                                    component={(route: any) => (
-                                        <SessionViewer
-                                            {...route}
-                                            selectedDate={route.match.params.date}
-                                            sessions={sessions}
-                                        />
-                                    )}
-                                />
-                            </Switch>
-                        </Router>
-                    )}
+                    {sessions => <FavManager>{fav => this.router(sessions, fav)}</FavManager>}
                 </InitStatusIndicatorOrApp>
             </Fragment>
         );
