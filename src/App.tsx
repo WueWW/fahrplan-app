@@ -1,5 +1,8 @@
+import 'react-semantic-toasts/styles/react-semantic-alert.css';
+
 import React, { Component, Fragment } from 'react';
 import { HashRouter as Router, Route, Switch } from 'react-router-dom';
+import { SemanticToastContainer, toast } from 'react-semantic-toasts';
 
 import Header from './component/Header';
 import InitStatusIndicatorOrApp from './component/InitStatusIndicatorOrApp';
@@ -62,9 +65,26 @@ class App extends Component<Props, AppState> {
                         </Router>
                     )}
                 </InitStatusIndicatorOrApp>
+                <SemanticToastContainer position="bottom-center" />
             </Fragment>
         );
     }
 }
+
+function pwaInstallPrompt(e) {
+    // Prevent Chrome 67 and earlier from automatically showing the prompt
+    e.preventDefault();
+
+    window.removeEventListener('beforeinstallprompt', pwaInstallPrompt);
+
+    toast({
+        title: 'Fahrplan App',
+        description: 'Die Fahrplan App kann als Progressive Web App auf den Startbildschirm hinzugefügt werden',
+        time: 2500,
+        onClick: () => (e as any).prompt(),
+    });
+}
+
+window.addEventListener('beforeinstallprompt', pwaInstallPrompt);
 
 export default App;
