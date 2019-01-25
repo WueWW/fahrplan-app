@@ -1,9 +1,10 @@
 import 'react-semantic-toasts/styles/react-semantic-alert.css';
 
 import React, { Component, Fragment } from 'react';
-import { HashRouter as Router, Route, Switch } from 'react-router-dom';
+import { HashRouter as Router, Route, RouteComponentProps, Switch } from 'react-router-dom';
 import { SemanticToastContainer, toast } from 'react-semantic-toasts';
 
+import FavManager from './component/FavManager';
 import Header from './component/Header';
 import InitStatusIndicatorOrApp from './component/InitStatusIndicatorOrApp';
 import AppState, { InitStatus } from './model/AppState';
@@ -79,22 +80,27 @@ class App extends Component<Props, AppState> {
                 <Header />
                 <InitStatusIndicatorOrApp {...this.state}>
                     {sessions => (
-                        <Router>
-                            <Switch>
-                                <Route path="/impressum" component={() => <InfoPage />} />
-                                <Route path="/info" component={() => <InfoPage />} />
-                                <Route
-                                    path="/:date?"
-                                    component={(route: any) => (
-                                        <SessionViewer
-                                            {...route}
-                                            selectedDate={route.match.params.date}
-                                            sessions={sessions}
+                        <FavManager>
+                            {fav => (
+                                <Router>
+                                    <Switch>
+                                        <Route path="/impressum" component={() => <InfoPage />} />
+                                        <Route path="/info" component={() => <InfoPage />} />
+                                        <Route
+                                            path="/:date?"
+                                            render={(route: RouteComponentProps<any>) => (
+                                                <SessionViewer
+                                                    {...fav}
+                                                    {...route}
+                                                    selectedDate={route.match.params.date}
+                                                    sessions={sessions}
+                                                />
+                                            )}
                                         />
-                                    )}
-                                />
-                            </Switch>
-                        </Router>
+                                    </Switch>
+                                </Router>
+                            )}
+                        </FavManager>
                     )}
                 </InitStatusIndicatorOrApp>
                 <SemanticToastContainer position="bottom-center" />
