@@ -48,6 +48,7 @@ class App extends Component<Props, AppState> {
                     {sessions => (
                         <Router>
                             <Switch>
+                                <Route path="/impressum" component={() => <InfoPage />} />
                                 <Route path="/info" component={() => <InfoPage />} />
                                 <Route
                                     path="/:date?"

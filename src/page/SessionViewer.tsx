@@ -3,6 +3,7 @@ import Hammer from 'react-hammerjs';
 import { RouteComponentProps } from 'react-router';
 
 import FavManager from '../component/FavManager';
+import Footer from '../component/Footer';
 import SessionDatePicker from '../component/SessionDatePicker';
 import SessionTable from '../component/SessionTable';
 import { Session, SessionList } from '../model/Session';
@@ -78,6 +79,8 @@ class SessionViewer extends Component<Props, State> {
                     <FavManager>
                         {fav => <SessionTable {...fav} sessions={partitionedSessions[this.selectedDate()]} />}
                     </FavManager>
+
+                    <Footer />
                 </div>
             </Hammer>
         );
