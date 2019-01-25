@@ -7,7 +7,7 @@
         "esModuleInterop": false,
         "allowSyntheticDefaultImports": true,
         "strict": true,
-        "noImplicitAny": false,
+        "noImplicitAny": true,
         "strictNullChecks": true,
         "strictFunctionTypes": true,
         "strictBindCallApply": true,
@@ -23,7 +23,8 @@
         "outDir": "./compiled.tsc/",
         "rootDir": "./src/",
         "importHelpers": true,
-        "downlevelIteration": true
+        "downlevelIteration": true,
+        "typeRoots": ["node_modules/@types", "custom_typings"]
     },
     "include": ["src"]
 }
