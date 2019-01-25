@@ -1,11 +1,9 @@
 import React, { Component, Fragment } from 'react';
 import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 
-import FavManager, { FavManagerProps } from './component/FavManager';
 import Header from './component/Header';
 import InitStatusIndicatorOrApp from './component/InitStatusIndicatorOrApp';
 import AppState, { InitStatus } from './model/AppState';
-import { SessionList } from './model/Session';
 import InfoPage from './page/InfoPage';
 import SessionViewer from './page/SessionViewer';
 
