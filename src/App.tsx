@@ -71,7 +71,7 @@ class App extends Component<Props, AppState> {
     }
 }
 
-function pwaInstallPrompt(e) {
+function pwaInstallPrompt(e: any) {
     // Prevent Chrome 67 and earlier from automatically showing the prompt
     e.preventDefault();
 
@@ -81,7 +81,7 @@ function pwaInstallPrompt(e) {
         title: 'Fahrplan App',
         description: 'Die Fahrplan App kann als Progressive Web App auf den Startbildschirm hinzugefügt werden',
         time: 2500,
-        onClick: () => (e as any).prompt(),
+        onClick: () => e.prompt(),
     });
 }
 
