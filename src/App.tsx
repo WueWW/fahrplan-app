@@ -13,6 +13,7 @@ import SessionViewer from './page/SessionViewer';
 export interface Props {}
 
 const SESSION_DATA_URL = 'https://wueww.github.io/fahrplan-2019/sessions.json';
+const updatesChannel = new BroadcastChannel('session-updates');
 
 class App extends Component<Props, AppState> {
     constructor(props: Props) {
@@ -21,23 +22,54 @@ class App extends Component<Props, AppState> {
         this.state = {
             status: InitStatus.FetchingSessionData,
         };
+
+        this.onSessionDataUpdate = this.onSessionDataUpdate.bind(this);
+    }
+
+    processSessionJSON(data: any) {
+        if (typeof data !== 'object' || !(data.sessions instanceof Array)) {
+            throw new Error('sessions data malformed');
+        }
+
+        this.setState({
+            status: InitStatus.InitializationComplete,
+            sessions: data.sessions,
+        });
     }
 
     async componentDidMount() {
+        updatesChannel.addEventListener('message', this.onSessionDataUpdate);
+
         try {
             const response = await fetch(SESSION_DATA_URL);
-            const data = await response.json();
-
-            if (typeof data !== 'object' || !(data.sessions instanceof Array)) {
-                throw new Error('sessions data malformed');
-            }
-
-            this.setState({
-                status: InitStatus.InitializationComplete,
-                sessions: data.sessions,
-            });
+            this.processSessionJSON(await response.json());
         } catch (e) {
             this.setState({ status: InitStatus.InitializationFailed });
+        }
+    }
+
+    componentWillUnmount() {
+        updatesChannel.removeEventListener('message', this.onSessionDataUpdate);
+    }
+
+    async onSessionDataUpdate(event: any) {
+        const { cacheName, updatedUrl } = event.data.payload;
+
+        try {
+            const cache = await caches.open(cacheName);
+            const response = await cache.match(updatedUrl);
+
+            if (!response) {
+                return;
+            }
+
+            this.processSessionJSON(await response.json());
+            toast({
+                title: 'Die Daten wurden erfolgreich aktualisiert',
+                time: 1500,
+            });
+        } catch {
+            console.warn('onSessionDataUpdate called, but updated failed');
         }
     }
 

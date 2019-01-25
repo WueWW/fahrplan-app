@@ -13,6 +13,9 @@ module.exports = isProdBuild => {
             {
                 urlPattern: new RegExp('sessions.json'),
                 handler: 'staleWhileRevalidate',
+                options: {
+                    broadcastUpdate: { channelName: 'session-updates' },
+                },
             },
         ],
     };
