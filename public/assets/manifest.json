@@ -2,6 +2,8 @@
     "name": "WueWW Fahrplan",
     "display": "standalone",
     "background_color": "#ffffff",
+    "start_url": ".",
+
     "icons": [
         {
             "src": "/android-icon-36x36.png",
