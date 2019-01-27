@@ -67,12 +67,12 @@ class Session extends React.Component<Props, State> {
                 <Card.Content extra>
                     <Icon
                         className="right floated"
-                        name="heart"
+                        name={this.props.isFavorite ? 'heart' : 'heart outline'}
                         color={this.props.isFavorite ? 'red' : undefined}
                         onClick={this.props.onToggleFavorite}
                         style={{ cursor: 'pointer' }}
                     />
-                    <Icon name="clock" />
+                    <Icon name="clock outline" />
                     {formatTime(this.props.start)}
                     {this.props.end && ' - ' + formatTime(this.props.end)}
                 </Card.Content>
