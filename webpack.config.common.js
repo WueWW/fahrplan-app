@@ -3,6 +3,13 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const path = require('path');
+const cssnano = require('cssnano');
+
+const cssLoaders = [
+    MiniCssExtractPlugin.loader,
+    'css-loader',
+    { loader: 'postcss-loader', options: { plugins: [cssnano()] } },
+];
 
 module.exports = {
     entry: './src/index.tsx',
@@ -14,20 +21,11 @@ module.exports = {
             { test: /\.tsx?/, loader: 'ts-loader' },
             {
                 test: /\.less$/,
-                use: [
-                    MiniCssExtractPlugin.loader,
-                    'css-loader',
-                    'postcss-loader',
-                    'less-loader',
-                ],
+                use: [...cssLoaders, 'less-loader'],
             },
             {
                 test: /\.css$/,
-                use: [
-                    MiniCssExtractPlugin.loader,
-                    'css-loader',
-                    'postcss-loader',
-                ],
+                use: cssLoaders,
             },
             {
                 test: /\.jpe?g$|\.gif$|\.png$|\.ttf$|\.eot$|\.svg$/,
@@ -41,10 +39,7 @@ module.exports = {
     },
     resolve: {
         alias: {
-            '../../theme.config$': path.join(
-                __dirname,
-                '/styling/theme.config.less'
-            ),
+            '../../theme.config$': path.join(__dirname, '/styling/theme.config.less'),
         },
         extensions: ['.ts', '.tsx', '.js'],
     },
