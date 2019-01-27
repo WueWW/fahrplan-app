@@ -32,7 +32,7 @@ class SessionViewer extends Component<Props, State> {
     }
 
     onDateSelected(selectedDate: string) {
-        this.props.history.push(`/${selectedDate}`);
+        this.props.history.replace(`/${selectedDate}`);
     }
 
     onSwipe(event: HammerInput) {
