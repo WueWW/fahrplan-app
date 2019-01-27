@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dropdown, Segment } from 'semantic-ui-react';
+import { Dropdown, Icon, Segment } from 'semantic-ui-react';
 
 export interface Props {
     options: string[];
@@ -20,6 +20,11 @@ const SessionDatePicker: React.FunctionComponent<Props> = props => (
     <Segment>
         <Dropdown
             fluid
+            trigger={
+                <span>
+                    <Icon name="calendar outline" /> {formatDate(props.selectedDate)}
+                </span>
+            }
             options={buildOptions(props.options)}
             value={props.selectedDate}
             onChange={(e, p) => props.onDateSelected(p.value as string)}
