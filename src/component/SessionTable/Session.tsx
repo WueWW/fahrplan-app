@@ -70,6 +70,7 @@ class Session extends React.Component<Props, State> {
                         name="heart"
                         color={this.props.isFavorite ? 'red' : undefined}
                         onClick={this.props.onToggleFavorite}
+                        style={{ cursor: 'pointer' }}
                     />
                     <Icon name="clock" />
                     {formatTime(this.props.start)}
