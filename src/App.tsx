@@ -14,7 +14,7 @@ import SessionViewer from './page/SessionViewer';
 export interface Props {}
 
 const SESSION_DATA_URL = 'https://wueww.github.io/fahrplan-2019/sessions.json';
-const updatesChannel = new BroadcastChannel('session-updates');
+const updatesChannel = BroadcastChannel && new BroadcastChannel('session-updates');
 
 class App extends Component<Props, AppState> {
     constructor(props: Props) {
@@ -39,7 +39,7 @@ class App extends Component<Props, AppState> {
     }
 
     async componentDidMount() {
-        updatesChannel.addEventListener('message', this.onSessionDataUpdate);
+        updatesChannel && updatesChannel.addEventListener('message', this.onSessionDataUpdate);
 
         try {
             const response = await fetch(SESSION_DATA_URL);
@@ -50,7 +50,7 @@ class App extends Component<Props, AppState> {
     }
 
     componentWillUnmount() {
-        updatesChannel.removeEventListener('message', this.onSessionDataUpdate);
+        updatesChannel && updatesChannel.removeEventListener('message', this.onSessionDataUpdate);
     }
 
     async onSessionDataUpdate(event: any) {
