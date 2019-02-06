@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { Button, Menu } from 'semantic-ui-react';
 
 export interface Props {}
@@ -44,15 +44,20 @@ class MenuBar extends Component<Props, State> {
                 {this.state.expanded && (
                     <div>
                         <Menu inverted vertical style={menuStyles}>
-                            <Link className="item" to="/" onClick={this.closeMenu}>
+                            <NavLink
+                                className="item"
+                                to="/"
+                                isActive={(_, location) => !!location.pathname.match(/^\/($|20)/)}
+                                onClick={this.closeMenu}
+                            >
                                 Fahrplan
-                            </Link>
-                            <Link className="item" to="/favorites" onClick={this.closeMenu}>
+                            </NavLink>
+                            <NavLink className="item" to="/favorites" onClick={this.closeMenu}>
                                 Favoriten
-                            </Link>
-                            <Link className="item" to="/impressum" onClick={this.closeMenu}>
+                            </NavLink>
+                            <NavLink className="item" to="/impressum" onClick={this.closeMenu}>
                                 Impressum
-                            </Link>
+                            </NavLink>
                         </Menu>
                     </div>
                 )}
