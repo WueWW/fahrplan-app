@@ -47,6 +47,9 @@ class MenuBar extends Component<Props, State> {
                             <Link className="item" to="/" onClick={this.closeMenu}>
                                 Fahrplan
                             </Link>
+                            <Link className="item" to="/favorites" onClick={this.closeMenu}>
+                                Favoriten
+                            </Link>
                             <Link className="item" to="/impressum" onClick={this.closeMenu}>
                                 Impressum
                             </Link>
