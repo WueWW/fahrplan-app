@@ -1,26 +1,31 @@
-import React, { Component } from 'react';
+import React, { Fragment, FunctionComponent } from 'react';
 
 import { FavManagerProps } from '../component/FavManager';
-import { SessionList } from '../model/Session';
+import SessionTable from '../component/SessionTable';
+import { Session, SessionList } from '../model/Session';
 
 export interface Props extends FavManagerProps {
     sessions: SessionList;
 }
 
-export interface State {}
+const FavoritesList: FunctionComponent<Props> = props => {
+    const data = Session.partitionByDate(Object.values(props.favorites));
+    const dates = Object.keys(data);
 
-class FavoritesList extends Component<Props, State> {
-    constructor(props: Props) {
-        super(props);
+    if (!dates.length) {
+        return <Fragment>Aktuell sind keine Favoriten ausgewählt.</Fragment>;
     }
 
-    render() {
-        return (
-            <div>
-                <h3>Favoritenliste</h3>
-            </div>
-        );
-    }
-}
+    return (
+        <Fragment>
+            {dates.map(datum => (
+                <Fragment key={datum}>
+                    <h3>{datum}</h3>
+                    <SessionTable {...props} sessions={data[datum]} />
+                </Fragment>
+            ))}
+        </Fragment>
+    );
+};
 
 export default FavoritesList;

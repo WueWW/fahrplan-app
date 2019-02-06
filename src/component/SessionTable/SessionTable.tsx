@@ -10,7 +10,7 @@ export interface Props extends FavManagerProps {
 }
 
 const SessionTable: React.FunctionComponent<Props> = props => (
-    <Card.Group centered doubling itemsPerRow="two">
+    <Card.Group doubling itemsPerRow="two">
         {props.sessions.map(session => {
             return (
                 <DisplaySession
