@@ -38,7 +38,7 @@ class MenuBar extends Component<Props, State> {
                     basic
                     inverted={this.state.expanded}
                     icon="bars"
-                    style={{ position: 'absolute', left: '1rem', top: '1rem', zIndex: 100 }}
+                    style={{ position: 'fixed', left: '1rem', top: '1rem', zIndex: 100 }}
                     onClick={this.toggleMenu}
                 />
                 {this.state.expanded && (
