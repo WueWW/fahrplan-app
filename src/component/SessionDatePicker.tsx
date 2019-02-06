@@ -1,15 +1,13 @@
 import React from 'react';
 import { Dropdown, Icon, Segment } from 'semantic-ui-react';
 
+import { formatDate } from '../util/DateUtil';
+
 export interface Props {
     options: string[];
     selectedDate: string;
 
     onDateSelected: (selectedDate: string) => void;
-}
-
-function formatDate(d: string): string {
-    return new Date(d).toLocaleDateString('de-de', { weekday: 'long', year: undefined, month: 'long', day: 'numeric' });
 }
 
 function buildOptions(options: string[]) {

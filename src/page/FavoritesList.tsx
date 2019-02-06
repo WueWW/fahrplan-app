@@ -3,6 +3,7 @@ import React, { Fragment, FunctionComponent } from 'react';
 import { FavManagerProps } from '../component/FavManager';
 import SessionTable from '../component/SessionTable';
 import { Session, SessionList } from '../model/Session';
+import { formatDate } from '../util/DateUtil';
 
 export interface Props extends FavManagerProps {
     sessions: SessionList;
@@ -20,7 +21,7 @@ const FavoritesList: FunctionComponent<Props> = props => {
         <Fragment>
             {dates.map(datum => (
                 <Fragment key={datum}>
-                    <h3>{datum}</h3>
+                    <h3>{formatDate(datum)}</h3>
                     <SessionTable {...props} sessions={data[datum]} />
                 </Fragment>
             ))}
