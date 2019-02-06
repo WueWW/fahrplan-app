@@ -7,6 +7,7 @@ import { SemanticToastContainer, toast } from 'react-semantic-toasts';
 import FavManager from './component/FavManager';
 import Header from './component/Header';
 import InitStatusIndicatorOrApp from './component/InitStatusIndicatorOrApp';
+import MenuBar from './component/MenuBar';
 import AppState, { InitStatus } from './model/AppState';
 import InfoPage from './page/InfoPage';
 import SessionViewer from './page/SessionViewer';
@@ -83,21 +84,24 @@ class App extends Component<Props, AppState> {
                         <FavManager>
                             {fav => (
                                 <Router>
-                                    <Switch>
-                                        <Route path="/impressum" component={() => <InfoPage />} />
-                                        <Route path="/info" component={() => <InfoPage />} />
-                                        <Route
-                                            path="/:date?"
-                                            render={(route: RouteComponentProps<any>) => (
-                                                <SessionViewer
-                                                    {...fav}
-                                                    {...route}
-                                                    selectedDate={route.match.params.date}
-                                                    sessions={sessions}
-                                                />
-                                            )}
-                                        />
-                                    </Switch>
+                                    <Fragment>
+                                        <MenuBar />
+                                        <Switch>
+                                            <Route path="/impressum" component={() => <InfoPage />} />
+                                            <Route path="/info" component={() => <InfoPage />} />
+                                            <Route
+                                                path="/:date?"
+                                                render={(route: RouteComponentProps<any>) => (
+                                                    <SessionViewer
+                                                        {...fav}
+                                                        {...route}
+                                                        selectedDate={route.match.params.date}
+                                                        sessions={sessions}
+                                                    />
+                                                )}
+                                            />
+                                        </Switch>
+                                    </Fragment>
                                 </Router>
                             )}
                         </FavManager>
