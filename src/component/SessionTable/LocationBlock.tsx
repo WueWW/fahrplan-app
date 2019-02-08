@@ -7,16 +7,26 @@ export interface Props {
     location?: Location;
 }
 
+const distanceDivStyle = { marginLeft: '1.5rem' };
+
 const LocationBlock: FunctionComponent<Props> = ({ location }) => {
     if (!location || !location.name) {
         return null;
     }
 
+    const parts = location.name
+        .split(/\n/)
+        .map((x: string) => x.trim())
+        .filter((x: string) => x);
+
     return (
         <Card.Content extra>
             <Card.Description>
-                <Icon name="globe" />
-                {location.name}
+                <Icon className="left floated" name="globe" />
+                <div style={distanceDivStyle}>{parts[0]}</div>
+                <div className="meta" style={distanceDivStyle}>
+                    {parts.slice(1).join(', ')}
+                </div>
             </Card.Description>
         </Card.Content>
     );
