@@ -12,6 +12,8 @@ interface State {
     big: boolean;
 }
 
+const bigP = (x: number) => x === 0;
+
 export class Layout extends React.Component<Props, State> {
     componentDidMount() {
         document.addEventListener('scroll', this.onIntersectionChanged);
@@ -22,7 +24,7 @@ export class Layout extends React.Component<Props, State> {
     }
 
     onIntersectionChanged = () => {
-        this.setState({ big: window.scrollY < 10 });
+        this.setState({ big: bigP(window.scrollY) });
     };
 
     render() {
@@ -39,6 +41,6 @@ export class Layout extends React.Component<Props, State> {
     }
 
     state = {
-        big: window.scrollY < 10,
+        big: bigP(window.scrollY),
     };
 }
