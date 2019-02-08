@@ -16,7 +16,7 @@ import SessionViewer from './page/SessionViewer';
 export interface Props {}
 
 const SESSION_DATA_URL = 'https://wueww.github.io/fahrplan-2019/sessions.json';
-const updatesChannel = BroadcastChannel && new BroadcastChannel('session-updates');
+const updatesChannel = typeof BroadcastChannel !== 'undefined' && new BroadcastChannel('session-updates');
 
 class App extends Component<Props, AppState> {
     constructor(props: Props) {
