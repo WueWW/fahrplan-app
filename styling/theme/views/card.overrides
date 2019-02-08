@@ -1,0 +1,3 @@
+.ui.card .meta, .ui.cards>.card .meta {
+    line-height: @relativeBig;
+}
