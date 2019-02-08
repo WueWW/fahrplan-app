@@ -11,7 +11,7 @@ const PageToggle: FunctionComponent<Props> = props => {
         ? { icon: 'heart outline', title: 'Favoriten anzeigen', onClick: () => props.history.push('/favorites') }
         : { icon: 'file alternate outline', title: 'Sessionliste anzeigen', onClick: () => props.history.push('/') };
 
-    return <Button {...buttonProps} size="massive" style={{ position: 'fixed', left: '1rem', top: '1rem' }} />;
+    return <Button {...buttonProps} size="massive" style={{ position: 'absolute', left: '1rem', top: '1rem' }} />;
 };
 
 export default PageToggle;

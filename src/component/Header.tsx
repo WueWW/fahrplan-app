@@ -1,9 +1,8 @@
 import React from 'react';
-import { Image } from 'semantic-ui-react';
 
 const Header: React.FunctionComponent = () => (
     <>
-        <Image id="logo" fluid src="assets/wueww-logo-2019.svg" />
+        <img id="logo" style={{ height: '100%', width: '100%', margin: '0 auto' }} src="assets/wueww-logo-2019.svg" />
     </>
 );
 

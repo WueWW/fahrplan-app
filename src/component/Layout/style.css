@@ -1,0 +1,28 @@
+.Layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+    grid-template-areas: 'header' 'body';
+}
+
+.Layout-Header {
+    grid-area: header;
+    height: 100px;
+    transition-duration: 0.8s;
+    top: 0;
+    position: sticky;
+}
+
+.Layout-Header-big {
+    height: 20vh;
+}
+
+.Layout-Body {
+    grid-area: body;
+    margin-top: 100px;
+    transition-duration: 0.8s;
+}
+
+.Layout-Header-big + .Layout-Body {
+    margin-top: 0px;
+}

@@ -5,24 +5,10 @@ footer {
     font-size: @relativeMedium;
     color: @lightTextColor;
 
-    border-top: 1px solid rgba(0,0,0,0.05);
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
     padding-top: 0.3em;
 }
 
 body {
     overflow-y: scroll;
 }
-
-#logo {
-    max-height: 100px;
-    max-width: 220px;
-    margin: 0 auto;
-}
-
-@media only screen and (min-width: @largestMobileScreen) {
-    #logo {
-        max-height: none;
-        max-width: 70%;
-    }
-}
-
