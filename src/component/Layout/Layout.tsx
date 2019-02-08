@@ -28,11 +28,12 @@ class Layout extends React.Component<Props, State> {
 
         if (
             window.innerWidth >= 992 &&
-            document.getElementById('root')!.offsetHeight + 100 - window.innerHeight * 0.42 < window.innerHeight
+            // the 1.05 factor is some assumed, minimal sensible scrolling step size (in dependence of window inner hegiht)
+            document.getElementById('root')!.offsetHeight + 100 - window.innerHeight * 0.42 < window.innerHeight * 1.05
         ) {
             // cannot effectively scroll (reducing logo size) without flickering
             // ... since reducing height (from innerHeight * 42% to 100px) would result in the viewport
-            // height not being scrollable anymore
+            // height not being scrollable anymore.
             return true;
         }
 
