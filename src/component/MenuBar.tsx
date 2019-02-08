@@ -12,6 +12,7 @@ const menuStyles = {
     position: 'fixed',
     left: 0,
     top: 0,
+    zIndex: 90,
     height: '100%',
     borderRadius: 0,
     paddingTop: '4em',
