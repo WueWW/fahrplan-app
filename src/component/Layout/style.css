@@ -11,6 +11,8 @@
     transition-duration: 0.8s;
     top: 0;
     position: sticky;
+    z-index: 100;
+    background: white;
 }
 
 .Layout-Header-big {
