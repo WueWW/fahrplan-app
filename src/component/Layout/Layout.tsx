@@ -1,7 +1,7 @@
+import './style.less';
+
 import React from 'react';
 import { Container } from 'semantic-ui-react';
-
-require('./style.less');
 
 interface Props {
     Header: React.ReactNode;
