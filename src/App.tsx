@@ -89,7 +89,6 @@ class App extends Component<Props, AppState> {
                                         <MenuBar />
                                         <Switch>
                                             <Route path="/impressum" component={() => <InfoPage />} />
-                                            <Route path="/info" component={() => <InfoPage />} />
                                             <Route
                                                 path="/favorites"
                                                 component={() => <FavoritesListPage {...fav} sessions={sessions} />}

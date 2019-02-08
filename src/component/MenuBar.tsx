@@ -58,7 +58,7 @@ class MenuBar extends Component<Props, State> {
                         Favoriten
                     </NavLink>
                     <NavLink className="item" to="/impressum" onClick={this.closeMenu} style={{ marginTop: '1rem' }}>
-                        Impressum
+                        Info&nbsp;&amp;&nbsp;Impressum
                     </NavLink>
                 </Menu>
             </Fragment>
