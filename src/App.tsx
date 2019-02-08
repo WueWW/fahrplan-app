@@ -10,7 +10,7 @@ import FavManager from './component/FavManager';
 import Header from './component/Header';
 import InitStatusIndicatorOrApp from './component/InitStatusIndicatorOrApp';
 import { Layout } from './component/Layout/Layout';
-import PageToggle from './component/PageToggle';
+import PageToggleButton from './component/PageToggleButton';
 import AppState, { InitStatus } from './model/AppState';
 import FavoritesListPage from './page/FavoritesListPage';
 import InfoPage from './page/InfoPage';
@@ -21,7 +21,7 @@ export interface Props {}
 const SESSION_DATA_URL = 'https://wueww.github.io/fahrplan-2019/sessions.json';
 const updatesChannel = typeof BroadcastChannel !== 'undefined' && new BroadcastChannel('session-updates');
 
-const PageToggleWithRouter = withRouter(PageToggle);
+const PageToggleWithRouter = withRouter(PageToggleButton);
 
 class App extends Component<Props, AppState> {
     constructor(props: Props) {
