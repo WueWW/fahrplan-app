@@ -9,6 +9,8 @@ export interface Props {
 
 const distanceDivStyle = { marginLeft: '1.5rem' };
 
+const isMobileDevice = (): boolean => /iPad|iPhone|iPod|android/i.test(navigator.userAgent);
+
 const LocationBlock: FunctionComponent<Props> = ({ location }) => {
     if (!location || !location.name) {
         return null;
@@ -19,11 +21,22 @@ const LocationBlock: FunctionComponent<Props> = ({ location }) => {
         .map((x: string) => x.trim())
         .filter((x: string) => x);
 
+    const geoLink =
+        location.lat !== undefined &&
+        location.lng !== undefined &&
+        (isMobileDevice()
+            ? `geo:${location.lat},${location.lng}`
+            : `https://www.openstreetmap.org/?mlat=${location.lat}&mlon=${location.lng}&zoom=16`);
+
     return (
         <Card.Content extra>
             <Card.Description>
                 <Icon className="left floated" name="globe" />
-                <div style={distanceDivStyle}>{parts[0]}</div>
+                <div style={distanceDivStyle}>
+                    <a href={geoLink || undefined} target="_blank">
+                        {parts[0]}
+                    </a>
+                </div>
                 <div className="meta" style={distanceDivStyle}>
                     {parts.slice(1).join(', ')}
                 </div>

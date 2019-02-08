@@ -1,7 +1,7 @@
 export interface Location {
     name: string;
-    latitude: number;
-    longitude: number;
+    lat?: number;
+    lng?: number;
 }
 
 export interface Session {
