@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container } from 'semantic-ui-react';
 
-require('./style.css');
+require('./style.less');
 
 interface Props {
     Header: React.ReactNode;
@@ -9,10 +9,10 @@ interface Props {
 }
 
 interface State {
-    big: boolean;
+    attached: boolean;
 }
 
-const bigP = (x: number) => x === 0;
+const attachedP = (y: number) => y === 0;
 
 export class Layout extends React.Component<Props, State> {
     componentDidMount() {
@@ -24,23 +24,22 @@ export class Layout extends React.Component<Props, State> {
     }
 
     onIntersectionChanged = () => {
-        this.setState({ big: bigP(window.scrollY) });
+        this.setState({ attached: attachedP(window.scrollY) });
     };
 
     render() {
         const { Header, children } = this.props;
-        const { big } = this.state;
+        const { attached } = this.state;
+
         return (
-            <div className="Layout">
-                <div className={'Layout-Header' + (big ? ' Layout-Header-big' : '')}>{Header}</div>
-                <Container className="Layout-Body" style={{ gridArea: 'body' }}>
-                    {children}
-                </Container>
+            <div className="layout">
+                <div className={'header' + (attached ? ' attached' : '')}>{Header}</div>
+                <Container className="body">{children}</Container>
             </div>
         );
     }
 
     state = {
-        big: bigP(window.scrollY),
+        attached: attachedP(window.scrollY),
     };
 }
