@@ -2,7 +2,6 @@ import React, { Fragment, FunctionComponent } from 'react';
 import { Icon, Message } from 'semantic-ui-react';
 
 import { FavManagerProps } from '../component/FavManager';
-import Footer from '../component/Footer';
 import SessionTable from '../component/SessionTable';
 import { Session, SessionList } from '../model/Session';
 import { formatDate } from '../util/DateUtil';
@@ -18,7 +17,6 @@ const FavoritesList: FunctionComponent<Props> = props => {
     if (!dates.length) {
         return (
             <Fragment>
-                {' '}
                 <Message icon negative>
                     <Icon name="info circle" />
                     <Message.Content>
@@ -41,8 +39,6 @@ const FavoritesList: FunctionComponent<Props> = props => {
                     <SessionTable {...props} sessions={data[datum]} />
                 </Fragment>
             ))}
-
-            <Footer />
         </Fragment>
     );
 };

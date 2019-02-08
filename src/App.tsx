@@ -9,7 +9,7 @@ import Header from './component/Header';
 import InitStatusIndicatorOrApp from './component/InitStatusIndicatorOrApp';
 import MenuBar from './component/MenuBar';
 import AppState, { InitStatus } from './model/AppState';
-import FavoritesList from './page/FavoritesList';
+import FavoritesListPage from './page/FavoritesListPage';
 import InfoPage from './page/InfoPage';
 import SessionViewer from './page/SessionViewer';
 
@@ -92,7 +92,7 @@ class App extends Component<Props, AppState> {
                                             <Route path="/info" component={() => <InfoPage />} />
                                             <Route
                                                 path="/favorites"
-                                                component={() => <FavoritesList {...fav} sessions={sessions} />}
+                                                component={() => <FavoritesListPage {...fav} sessions={sessions} />}
                                             />
                                             <Route
                                                 path="/:date?"
