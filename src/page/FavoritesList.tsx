@@ -1,6 +1,7 @@
 import React, { Fragment, FunctionComponent } from 'react';
 
 import { FavManagerProps } from '../component/FavManager';
+import Footer from '../component/Footer';
 import SessionTable from '../component/SessionTable';
 import { Session, SessionList } from '../model/Session';
 import { formatDate } from '../util/DateUtil';
@@ -25,6 +26,8 @@ const FavoritesList: FunctionComponent<Props> = props => {
                     <SessionTable {...props} sessions={data[datum]} />
                 </Fragment>
             ))}
+
+            <Footer />
         </Fragment>
     );
 };
