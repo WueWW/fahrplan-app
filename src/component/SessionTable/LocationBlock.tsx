@@ -33,7 +33,7 @@ const LocationBlock: FunctionComponent<Props> = ({ location }) => {
             <Card.Description>
                 <Icon className="left floated" name="globe" />
                 <div style={distanceDivStyle}>
-                    <a href={geoLink || undefined} target="_blank">
+                    <a href={geoLink || undefined} target={isMobileDevice() ? undefined : '_blank'}>
                         {parts[0]}
                     </a>
                 </div>
