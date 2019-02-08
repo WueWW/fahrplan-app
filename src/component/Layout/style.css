@@ -19,7 +19,6 @@
 
 .Layout-Body {
     grid-area: body;
-    margin-top: 100px;
     transition-duration: 0.8s;
 }
 
