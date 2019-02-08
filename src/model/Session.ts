@@ -40,4 +40,10 @@ export namespace Session {
             {} as PartitionedSessionList
         );
     }
+
+    export function startTimeComparator(a: Session, b: Session) {
+        if (a.start < b.start) return -1;
+        if (a.start > b.start) return 1;
+        return 0;
+    }
 }
