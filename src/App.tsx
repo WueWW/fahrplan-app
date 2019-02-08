@@ -3,11 +3,12 @@ import 'react-semantic-toasts/styles/react-semantic-alert.css';
 import React, { Component, Fragment } from 'react';
 import { HashRouter as Router, Route, RouteComponentProps, Switch } from 'react-router-dom';
 import { SemanticToastContainer, toast } from 'react-semantic-toasts';
+import { Container } from 'semantic-ui-react';
 
 import FavManager from './component/FavManager';
 import Header from './component/Header';
 import InitStatusIndicatorOrApp from './component/InitStatusIndicatorOrApp';
-import MenuBar from './component/MenuBar';
+import SidebarMenu from './component/SidebarMenu';
 import AppState, { InitStatus } from './model/AppState';
 import FavoritesList from './page/FavoritesList';
 import InfoPage from './page/InfoPage';
@@ -78,42 +79,43 @@ class App extends Component<Props, AppState> {
 
     render() {
         return (
-            <Fragment>
-                <Header />
-                <InitStatusIndicatorOrApp {...this.state}>
-                    {sessions => (
-                        <FavManager>
-                            {fav => (
-                                <Router>
-                                    <Fragment>
-                                        <MenuBar />
-                                        <Switch>
-                                            <Route path="/impressum" component={() => <InfoPage />} />
-                                            <Route path="/info" component={() => <InfoPage />} />
-                                            <Route
-                                                path="/favorites"
-                                                component={() => <FavoritesList {...fav} sessions={sessions} />}
-                                            />
-                                            <Route
-                                                path="/:date?"
-                                                render={(route: RouteComponentProps<any>) => (
-                                                    <SessionViewer
-                                                        {...fav}
-                                                        {...route}
-                                                        selectedDate={route.match.params.date}
-                                                        sessions={sessions}
-                                                    />
-                                                )}
-                                            />
-                                        </Switch>
-                                    </Fragment>
-                                </Router>
+            <Router>
+                <SidebarMenu>
+                    <Container>
+                        <Header />
+                        <InitStatusIndicatorOrApp {...this.state}>
+                            {sessions => (
+                                <FavManager>
+                                    {fav => (
+                                        <Fragment>
+                                            <Switch>
+                                                <Route path="/impressum" component={() => <InfoPage />} />
+                                                <Route path="/info" component={() => <InfoPage />} />
+                                                <Route
+                                                    path="/favorites"
+                                                    component={() => <FavoritesList {...fav} sessions={sessions} />}
+                                                />
+                                                <Route
+                                                    path="/:date?"
+                                                    render={(route: RouteComponentProps<any>) => (
+                                                        <SessionViewer
+                                                            {...fav}
+                                                            {...route}
+                                                            selectedDate={route.match.params.date}
+                                                            sessions={sessions}
+                                                        />
+                                                    )}
+                                                />
+                                            </Switch>
+                                        </Fragment>
+                                    )}
+                                </FavManager>
                             )}
-                        </FavManager>
-                    )}
-                </InitStatusIndicatorOrApp>
-                <SemanticToastContainer position="bottom-center" />
-            </Fragment>
+                        </InitStatusIndicatorOrApp>
+                        <SemanticToastContainer position="bottom-center" />
+                    </Container>
+                </SidebarMenu>
+            </Router>
         );
     }
 }
