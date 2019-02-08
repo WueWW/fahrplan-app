@@ -39,6 +39,8 @@ const InfoPage: FunctionComponent = () => (
             97072 Würzburg <br />
             <br />
             E-Mail: <a href="mailto:stesie@brokenpipe.de">stesie@brokenpipe.de</a>
+            <br />
+            Twitter: <a href="https://twitter.com/stesie23">@stesie23</a>
         </p>
     </div>
 );
