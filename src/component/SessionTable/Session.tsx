@@ -2,6 +2,7 @@ import React from 'react';
 import { Card, Icon } from 'semantic-ui-react';
 
 import { Session as SessionType } from '../../model/Session';
+import LocationBlock from './LocationBlock';
 
 export interface Props extends SessionType {
     isFavorite: boolean;
@@ -55,14 +56,7 @@ class Session extends React.Component<Props, State> {
                         <Card.Description>{this.description()}</Card.Description>
                     </Card.Content>
                 )}
-                {this.state.expanded && this.props.location && this.props.location.name && (
-                    <Card.Content extra>
-                        <Card.Description>
-                            <Icon name="globe" />
-                            {this.props.location.name}
-                        </Card.Description>
-                    </Card.Content>
-                )}
+                {this.state.expanded && <LocationBlock location={this.props.location} />}
 
                 <Card.Content extra>
                     <Icon

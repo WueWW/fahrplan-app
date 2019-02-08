@@ -1,3 +1,9 @@
+export interface Location {
+    name: string;
+    latitude: number;
+    longitude: number;
+}
+
 export interface Session {
     key: string;
     start: string;
@@ -7,11 +13,7 @@ export interface Session {
         infotext?: string;
     };
     title: string;
-    location?: {
-        name: string;
-        latitude: number;
-        longitude: number;
-    };
+    location?: Location;
     description?: {
         short?: string;
         long?: string;
