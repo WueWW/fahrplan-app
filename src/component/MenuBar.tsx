@@ -8,15 +8,18 @@ export interface State {
     expanded: boolean;
 }
 
-const menuStyles = {
+const menuStyles = (expanded: boolean) => ({
     position: 'fixed',
     left: 0,
     top: 0,
     zIndex: 90,
     height: '100%',
+    width: expanded ? undefined : 0,
+    margin: 0,
     borderRadius: 0,
     paddingTop: '4em',
-};
+    transition: '0.3s',
+});
 
 class MenuBar extends Component<Props, State> {
     constructor(props: Props) {
@@ -42,26 +45,22 @@ class MenuBar extends Component<Props, State> {
                     style={{ position: 'fixed', left: '1rem', top: '1rem', zIndex: 100 }}
                     onClick={this.toggleMenu}
                 />
-                {this.state.expanded && (
-                    <div>
-                        <Menu inverted vertical style={menuStyles}>
-                            <NavLink
-                                className="item"
-                                to="/"
-                                isActive={(_, location) => !!location.pathname.match(/^\/($|20)/)}
-                                onClick={this.closeMenu}
-                            >
-                                Fahrplan
-                            </NavLink>
-                            <NavLink className="item" to="/favorites" onClick={this.closeMenu}>
-                                Favoriten
-                            </NavLink>
-                            <NavLink className="item" to="/impressum" onClick={this.closeMenu}>
-                                Impressum
-                            </NavLink>
-                        </Menu>
-                    </div>
-                )}
+                <Menu inverted vertical style={menuStyles(this.state.expanded)}>
+                    <NavLink
+                        className="item"
+                        to="/"
+                        isActive={(_, location) => !!location.pathname.match(/^\/($|20)/)}
+                        onClick={this.closeMenu}
+                    >
+                        Fahrplan
+                    </NavLink>
+                    <NavLink className="item" to="/favorites" onClick={this.closeMenu}>
+                        Favoriten
+                    </NavLink>
+                    <NavLink className="item" to="/impressum" onClick={this.closeMenu} style={{ marginTop: '1rem' }}>
+                        Impressum
+                    </NavLink>
+                </Menu>
             </Fragment>
         );
     }
