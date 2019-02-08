@@ -9,7 +9,7 @@ import { SemanticToastContainer, toast } from 'react-semantic-toasts';
 import FavManager from './component/FavManager';
 import Header from './component/Header';
 import InitStatusIndicatorOrApp from './component/InitStatusIndicatorOrApp';
-import { Layout } from './component/Layout/Layout';
+import Layout from './component/Layout/Layout';
 import PageToggleButton from './component/PageToggleButton';
 import AppState, { InitStatus } from './model/AppState';
 import FavoritesListPage from './page/FavoritesListPage';

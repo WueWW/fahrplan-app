@@ -3,16 +3,16 @@ import './style.less';
 import React from 'react';
 import { Container } from 'semantic-ui-react';
 
-interface Props {
+export interface Props {
     Header: React.ReactNode;
     children: React.ReactNode;
 }
 
-interface State {
+export interface State {
     attached: boolean;
 }
 
-export class Layout extends React.Component<Props, State> {
+class Layout extends React.Component<Props, State> {
     componentDidMount() {
         document.addEventListener('scroll', this.onIntersectionChanged);
     }
@@ -62,3 +62,5 @@ export class Layout extends React.Component<Props, State> {
         };
     }
 }
+
+export default Layout;
