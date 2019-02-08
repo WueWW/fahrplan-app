@@ -11,7 +11,7 @@ export interface Props extends FavManagerProps {
 
 const FavoritesList: FunctionComponent<Props> = props => {
     const data = Session.partitionByDate(Object.values(props.favorites));
-    const dates = Object.keys(data);
+    const dates = Object.keys(data).sort();
 
     if (!dates.length) {
         return <Fragment>Aktuell sind keine Favoriten ausgewählt.</Fragment>;
