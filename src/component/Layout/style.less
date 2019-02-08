@@ -1,3 +1,6 @@
+@import "~semantic-ui-less/themes/default/globals/site.variables";
+@import "../../styling/theme/globals/site.variables";
+
 .layout {
     display: grid;
     grid-template-columns: 1fr;
@@ -11,11 +14,13 @@
         position: sticky;
         z-index: 100;
         background: white;
-        border-bottom: 1px solid grey;
-        box-shadow: 0px 1px 2px 0 rgba(34, 36, 38, 0.15);
+        border-bottom: @borderColor;
+        box-shadow: @floatingShadow;
+
+        // set size on content-box, so the logo size doesn't change if we show/hide the border below the (sticky) header
+        box-sizing: content-box;
 
         &.attached {
-            height: 42vh;
             border-bottom: none;
             box-shadow: none;
         }
@@ -23,5 +28,11 @@
 
     > .body {
         grid-area: body;
+    }
+}
+
+@media only screen and (min-width: @computerBreakpoint) {
+    .layout > .header.attached {
+        height: 42vh;
     }
 }
