@@ -1,13 +1,15 @@
 import 'react-semantic-toasts/styles/react-semantic-alert.css';
 
 import React, { Component, Fragment } from 'react';
-import { HashRouter as Router, Route, RouteComponentProps, Switch } from 'react-router-dom';
+import {
+    HashRouter as Router, Route, RouteComponentProps, Switch, withRouter
+} from 'react-router-dom';
 import { SemanticToastContainer, toast } from 'react-semantic-toasts';
 
 import FavManager from './component/FavManager';
 import Header from './component/Header';
 import InitStatusIndicatorOrApp from './component/InitStatusIndicatorOrApp';
-import MenuBar from './component/MenuBar';
+import PageToggle from './component/PageToggle';
 import AppState, { InitStatus } from './model/AppState';
 import FavoritesListPage from './page/FavoritesListPage';
 import InfoPage from './page/InfoPage';
@@ -17,6 +19,8 @@ export interface Props {}
 
 const SESSION_DATA_URL = 'https://wueww.github.io/fahrplan-2019/sessions.json';
 const updatesChannel = typeof BroadcastChannel !== 'undefined' && new BroadcastChannel('session-updates');
+
+const PageToggleWithRouter = withRouter(PageToggle);
 
 class App extends Component<Props, AppState> {
     constructor(props: Props) {
@@ -78,41 +82,40 @@ class App extends Component<Props, AppState> {
 
     render() {
         return (
-            <Fragment>
-                <Header />
-                <InitStatusIndicatorOrApp {...this.state}>
-                    {sessions => (
-                        <FavManager>
-                            {fav => (
-                                <Router>
-                                    <Fragment>
-                                        <MenuBar />
-                                        <Switch>
-                                            <Route path="/impressum" component={() => <InfoPage />} />
-                                            <Route
-                                                path="/favorites"
-                                                component={() => <FavoritesListPage {...fav} sessions={sessions} />}
-                                            />
-                                            <Route
-                                                path="/:date?"
-                                                render={(route: RouteComponentProps<any>) => (
-                                                    <SessionViewer
-                                                        {...fav}
-                                                        {...route}
-                                                        selectedDate={route.match.params.date}
-                                                        sessions={sessions}
-                                                    />
-                                                )}
-                                            />
-                                        </Switch>
-                                    </Fragment>
-                                </Router>
-                            )}
-                        </FavManager>
-                    )}
-                </InitStatusIndicatorOrApp>
-                <SemanticToastContainer position="bottom-center" />
-            </Fragment>
+            <Router>
+                <Fragment>
+                    <PageToggleWithRouter />
+                    <Header />
+
+                    <InitStatusIndicatorOrApp {...this.state}>
+                        {sessions => (
+                            <FavManager>
+                                {fav => (
+                                    <Switch>
+                                        <Route path="/impressum" component={() => <InfoPage />} />
+                                        <Route
+                                            path="/favorites"
+                                            component={() => <FavoritesListPage {...fav} sessions={sessions} />}
+                                        />
+                                        <Route
+                                            path="/:date?"
+                                            render={(route: RouteComponentProps<any>) => (
+                                                <SessionViewer
+                                                    {...fav}
+                                                    {...route}
+                                                    selectedDate={route.match.params.date}
+                                                    sessions={sessions}
+                                                />
+                                            )}
+                                        />
+                                    </Switch>
+                                )}
+                            </FavManager>
+                        )}
+                    </InitStatusIndicatorOrApp>
+                    <SemanticToastContainer position="bottom-center" />
+                </Fragment>
+            </Router>
         );
     }
 }
