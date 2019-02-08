@@ -39,7 +39,7 @@ module.exports = {
     },
     resolve: {
         alias: {
-            '../../theme.config$': path.join(__dirname, '/styling/theme.config.less'),
+            '../../theme.config$': path.join(__dirname, '/src/styling/theme.config.less'),
         },
         extensions: ['.ts', '.tsx', '.js'],
     },
