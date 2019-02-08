@@ -1,4 +1,5 @@
 import React, { Fragment, FunctionComponent } from 'react';
+import { Icon, Message } from 'semantic-ui-react';
 
 import { FavManagerProps } from '../component/FavManager';
 import Footer from '../component/Footer';
@@ -15,7 +16,21 @@ const FavoritesList: FunctionComponent<Props> = props => {
     const dates = Object.keys(data).sort();
 
     if (!dates.length) {
-        return <Fragment>Aktuell sind keine Favoriten ausgewählt.</Fragment>;
+        return (
+            <Fragment>
+                {' '}
+                <Message icon negative>
+                    <Icon name="info circle" />
+                    <Message.Content>
+                        <Message.Header>Keine Favoriten ausgewählt</Message.Header>
+                        <p>
+                            Aktuell ist keine der Sessions als "Favorit" markiert. Verwende das Herz-Symbol an der
+                            Sessionkachel um die jeweilige Session zu dieser Liste hinzuzufügen.
+                        </p>
+                    </Message.Content>
+                </Message>
+            </Fragment>
+        );
     }
 
     return (
