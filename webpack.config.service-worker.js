@@ -11,7 +11,7 @@ module.exports = isProdBuild => {
 
         runtimeCaching: [
             {
-                urlPattern: new RegExp('sessions.json'),
+                urlPattern: 'https://wueww.github.io/fahrplan-2019/sessions.json',
                 handler: 'staleWhileRevalidate',
                 options: {
                     broadcastUpdate: { channelName: 'session-updates' },
