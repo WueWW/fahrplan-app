@@ -16,6 +16,9 @@ module.exports = {
     output: {
         filename: './app.js',
     },
+    node: {
+        fs: 'empty',
+    },
     module: {
         rules: [
             { test: /\.tsx?/, loader: 'ts-loader' },
