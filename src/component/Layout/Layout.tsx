@@ -13,6 +13,8 @@ export interface State {
 }
 
 class Layout extends React.Component<Props, State> {
+    private debounceTimer?: number;
+
     componentDidMount() {
         document.addEventListener('scroll', this.onIntersectionChanged);
     }
@@ -26,10 +28,20 @@ class Layout extends React.Component<Props, State> {
             return true;
         }
 
+        if (this.state.attached && window.scrollY < window.innerHeight * 0.03) {
+            return true;
+        }
+
+        let contentHeight = document.getElementById('root')!.offsetHeight;
+
+        if (this.state.attached) {
+            contentHeight -= window.innerHeight * 0.42 - 100;
+        }
+
         if (
             window.innerWidth >= 992 &&
             // the 1.05 factor is some assumed, minimal sensible scrolling step size (in dependence of window inner hegiht)
-            document.getElementById('root')!.offsetHeight + 100 - window.innerHeight * 0.42 < window.innerHeight * 1.05
+            contentHeight < window.innerHeight * 1.05
         ) {
             // cannot effectively scroll (reducing logo size) without flickering
             // ... since reducing height (from innerHeight * 42% to 100px) would result in the viewport
@@ -41,7 +53,12 @@ class Layout extends React.Component<Props, State> {
     };
 
     onIntersectionChanged = () => {
-        this.setState({ attached: this.shouldBeAttached() });
+        if (!this.debounceTimer) {
+            this.debounceTimer = window.setTimeout(() => {
+                this.debounceTimer = undefined;
+                this.setState({ attached: this.shouldBeAttached() });
+            }, 50);
+        }
     };
 
     render() {
