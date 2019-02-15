@@ -24,17 +24,17 @@ const updatesChannel = typeof BroadcastChannel !== 'undefined' && new BroadcastC
 const PageToggleWithRouter = withRouter(PageToggleButton);
 
 class App extends Component<Props, AppState> {
+    private lastFetch?: number;
+
     constructor(props: Props) {
         super(props);
 
         this.state = {
             status: InitStatus.FetchingSessionData,
         };
-
-        this.onSessionDataUpdate = this.onSessionDataUpdate.bind(this);
     }
 
-    processSessionJSON(data: any) {
+    processSessionJSON = (data: any) => {
         if (typeof data !== 'object' || !(data.sessions instanceof Array)) {
             throw new Error('sessions data malformed');
         }
@@ -43,24 +43,44 @@ class App extends Component<Props, AppState> {
             status: InitStatus.InitializationComplete,
             sessions: data.sessions,
         });
-    }
+    };
 
-    async componentDidMount() {
-        updatesChannel && updatesChannel.addEventListener('message', this.onSessionDataUpdate);
-
+    fetchSessionJSON = async () => {
         try {
+            if (this.lastFetch && (Date.now() - this.lastFetch) / 60e3 < 30) {
+                console.log('skipping auto-update, last fetch < 30 minutes ago');
+                return;
+            }
+
             const response = await fetch(SESSION_DATA_URL);
             this.processSessionJSON(await response.json());
+            this.lastFetch = Date.now();
         } catch (e) {
             this.setState({ status: InitStatus.InitializationFailed });
         }
+    };
+
+    componentDidMount() {
+        updatesChannel && updatesChannel.addEventListener('message', this.onSessionDataUpdate);
+        document.addEventListener('visibilitychange', this.onVisibilityChange);
+
+        this.fetchSessionJSON();
     }
 
     componentWillUnmount() {
         updatesChannel && updatesChannel.removeEventListener('message', this.onSessionDataUpdate);
+        document.removeEventListener('visibilitychange', this.onVisibilityChange);
     }
 
-    async onSessionDataUpdate(event: any) {
+    onVisibilityChange = () => {
+        if (document.visibilityState !== 'visible') {
+            return;
+        }
+
+        this.fetchSessionJSON();
+    };
+
+    onSessionDataUpdate = async (event: any) => {
         const { cacheName, updatedUrl } = event.data.payload;
 
         try {
@@ -79,7 +99,7 @@ class App extends Component<Props, AppState> {
         } catch {
             console.warn('onSessionDataUpdate called, but updated failed');
         }
-    }
+    };
 
     render() {
         return (
