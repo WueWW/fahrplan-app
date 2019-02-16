@@ -28,10 +28,6 @@ class Layout extends React.Component<Props, State> {
             return true;
         }
 
-        if (this.state.attached && window.scrollY < window.innerHeight * 0.03) {
-            return true;
-        }
-
         let contentHeight = document.getElementById('root')!.offsetHeight;
 
         if (this.state.attached) {
