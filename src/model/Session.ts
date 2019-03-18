@@ -8,6 +8,7 @@ export interface Session {
     key: string;
     start: string;
     end: string | null;
+    cancelled: boolean;
     host: {
         name: string;
         infotext?: string;
@@ -19,6 +20,10 @@ export interface Session {
         long?: string;
     };
     tags?: string[];
+    links?: {
+        event?: string;
+        host?: string;
+    };
 }
 
 export type SessionList = Session[];

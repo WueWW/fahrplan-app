@@ -1,8 +1,10 @@
-import React from 'react';
-import { Card, Icon } from 'semantic-ui-react';
+import './style.less';
 
-import { Session as SessionType } from '../../model/Session';
-import LocationBlock from './LocationBlock';
+import React from 'react';
+import { Card, Icon, Label } from 'semantic-ui-react';
+
+import { Session as SessionType } from '../../../model/Session';
+import LocationBlock from '../LocationBlock';
 
 export interface Props extends SessionType {
     isFavorite: boolean;
@@ -39,7 +41,7 @@ class Session extends React.Component<Props, State> {
 
     render() {
         return (
-            <Card>
+            <Card className={this.props.cancelled ? 'cancelled' : undefined}>
                 <Card.Content>
                     <Card.Header onClick={this.handleExpand} style={{ cursor: 'pointer' }}>
                         {this.isExpandable() && (
@@ -51,12 +53,21 @@ class Session extends React.Component<Props, State> {
                     </Card.Header>
                     <Card.Meta>{this.props.host.name}</Card.Meta>
                 </Card.Content>
-                {this.state.expanded && this.description() && (
+                {this.state.expanded && this.props.cancelled && (
+                    <Card.Content extra>
+                        <Card.Description>
+                            <Label color="red">
+                                <Icon name="ban" /> Die Session wurde abgesagt.
+                            </Label>
+                        </Card.Description>
+                    </Card.Content>
+                )}
+                {this.state.expanded && !this.props.cancelled && this.description() && (
                     <Card.Content extra>
                         <Card.Description>{this.description()}</Card.Description>
                     </Card.Content>
                 )}
-                {this.state.expanded && <LocationBlock location={this.props.location} />}
+                {this.state.expanded && !this.props.cancelled && <LocationBlock location={this.props.location} />}
 
                 <Card.Content extra>
                     <Icon
