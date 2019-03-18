@@ -48,11 +48,19 @@ class Session extends React.Component<Props, State> {
     }
 
     eventUrl(): string | undefined {
-        if (!this.props.links || !this.props.links.event || !this.props.links.event.startsWith('http')) {
+        if (!this.props.links || !this.props.links.event) {
             return undefined;
         }
 
-        return this.props.links.event;
+        if (this.props.links.event.startsWith('http')) {
+            return this.props.links.event;
+        }
+
+        if (this.props.links.event.startsWith('www.')) {
+            return `http://${this.props.links.event}`;
+        }
+
+        return undefined;
     }
 
     render() {
