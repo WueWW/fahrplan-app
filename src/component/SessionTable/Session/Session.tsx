@@ -39,7 +39,24 @@ class Session extends React.Component<Props, State> {
         this.setState(state => ({ expanded: !state.expanded }));
     }
 
+    eventEmail(): string | undefined {
+        if (!this.props.links || !this.props.links.event || this.props.links.event.indexOf('@') === -1) {
+            return undefined;
+        }
+
+        return this.props.links.event;
+    }
+
+    eventUrl(): string | undefined {
+        if (!this.props.links || !this.props.links.event || !this.props.links.event.startsWith('http')) {
+            return undefined;
+        }
+
+        return this.props.links.event;
+    }
+
     render() {
+        console.log(this.props);
         return (
             <Card className={this.props.cancelled ? 'cancelled' : undefined}>
                 <Card.Content>
@@ -77,6 +94,16 @@ class Session extends React.Component<Props, State> {
                         onClick={this.props.onToggleFavorite}
                         style={{ cursor: 'pointer' }}
                     />
+                    {this.eventUrl() && (
+                        <a href={this.eventUrl()}>
+                            <Icon className="right floated" name="linkify" style={{ cursor: 'pointer' }} />
+                        </a>
+                    )}
+                    {this.eventEmail() && (
+                        <a href={`mailto:${this.eventEmail()}`}>
+                            <Icon className="right floated" name="mail" style={{ cursor: 'pointer' }} />
+                        </a>
+                    )}
                     <Icon name="clock outline" />
                     {formatTime(this.props.start)}
                     {this.props.end && ' - ' + formatTime(this.props.end)}
