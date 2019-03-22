@@ -21,7 +21,7 @@ const geoLink = (location: Location): string | undefined => {
     }
 
     if (isAppleDevice()) {
-        return `http://maps.apple.com/?ll=${location.lat},${location.lng}`;
+        return `http://maps.apple.com/?daddr=${location.lat},${location.lng}&z=16`;
     }
 
     if (isAndroidDevice()) {
