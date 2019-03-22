@@ -15,9 +15,9 @@ const SessionTable: React.FunctionComponent<Props> = props => (
             return (
                 <DisplaySession
                     {...session}
-                    isFavorite={session.key in props.favorites}
+                    isFavorite={props.favorites.includes(session.key)}
                     onToggleFavorite={
-                        session.key in props.favorites
+                        props.favorites.includes(session.key)
                             ? () => props.removeFavorite(session.key)
                             : () => props.addFavorite(session)
                     }

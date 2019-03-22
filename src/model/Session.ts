@@ -8,7 +8,7 @@ export interface Session {
     key: string;
     start: string;
     end: string | null;
-    cancelled: boolean;
+    cancelled?: boolean;
     host: {
         name: string;
         infotext?: string;
@@ -28,6 +28,25 @@ export interface Session {
 
 export type SessionList = Session[];
 export type PartitionedSessionList = { [key: string]: SessionList };
+
+export function isSession(session: any): session is Session {
+    if (typeof session !== 'object' || session === null) {
+        return false;
+    }
+
+    return (
+        typeof session.key === 'string' &&
+        typeof session.start === 'string' &&
+        (typeof session.end === 'string' || session.end === null) &&
+        (typeof session.cancelled === 'boolean' || session.cancelled === undefined) &&
+        typeof session.host === 'object' &&
+        session.host !== undefined &&
+        typeof session.host.name === 'string' &&
+        (typeof session.host.infotext === 'string' || session.host.infotext === undefined) &&
+        typeof session.title === 'string'
+        // FIXME not fully complete ...
+    );
+}
 
 function extractDate(session: Session): string {
     return new Date(session.start).toISOString().substr(0, 10);

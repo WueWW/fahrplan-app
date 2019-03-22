@@ -64,7 +64,6 @@ class Session extends React.Component<Props, State> {
     }
 
     render() {
-        console.log(this.props);
         return (
             <Card className={this.props.cancelled ? 'cancelled' : undefined}>
                 <Card.Content>
