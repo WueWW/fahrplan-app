@@ -2,18 +2,13 @@ import React, { FunctionComponent } from 'react';
 import { Card, Icon } from 'semantic-ui-react';
 
 import { Location } from '../../model/Session';
+import { isAndroidDevice, isAppleDevice, isMobileDevice } from '../../util/mobile';
 
 export interface Props {
     location?: Location;
 }
 
 const distanceDivStyle = { marginLeft: '1.5rem' };
-
-const isAppleDevice = (): boolean => /iPad|iPhone|iPod/i.test(navigator.userAgent);
-
-const isAndroidDevice = (): boolean => /android/i.test(navigator.userAgent);
-
-const isMobileDevice = (): boolean => isAppleDevice() || isAndroidDevice();
 
 const geoLink = (location: Location): string | undefined => {
     if (location.lat === undefined || location.lng === undefined) {
