@@ -5,6 +5,7 @@ import FavoritesList, { Props } from '../component/FavoritesList';
 import Footer from '../component/Footer';
 import generateIcal from '../icalExport';
 import { SessionList } from '../model/Session';
+import { isAppleStandalone } from '../util/mobile';
 
 const downloadIcalFile = (sessions: SessionList) => {
     var element = document.createElement('a');
@@ -16,15 +17,17 @@ const downloadIcalFile = (sessions: SessionList) => {
 
 const FavoritesListPage: FunctionComponent<Props> = props => (
     <Fragment>
-        <Button
-            primary
-            icon="calendar alternate outline"
-            content="in Kalender exportieren"
-            onClick={() => {
-                const favoriteKeys = Object.keys(props.favorites);
-                downloadIcalFile(props.sessions.filter(session => favoriteKeys.includes(session.key)));
-            }}
-        />
+        {isAppleStandalone() || (
+            <Button
+                primary
+                icon="calendar alternate outline"
+                content="in Kalender exportieren"
+                onClick={() => {
+                    const favoriteKeys = Object.keys(props.favorites);
+                    downloadIcalFile(props.sessions.filter(session => favoriteKeys.includes(session.key)));
+                }}
+            />
+        )}
         <FavoritesList {...props} />
         <Footer />
     </Fragment>
