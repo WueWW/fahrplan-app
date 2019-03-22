@@ -28,7 +28,14 @@ class SessionViewer extends Component<Props, State> {
     }
 
     defaultDate() {
-        return Object.keys(Session.partitionByDate(this.props.sessions)).sort()[0];
+        const availableDates = Object.keys(Session.partitionByDate(this.props.sessions)).sort();
+        const todayDate = new Date().toISOString().substr(0, 10);
+
+        if (availableDates.includes(todayDate)) {
+            return todayDate;
+        }
+
+        return availableDates[0];
     }
 
     onDateSelected(selectedDate: string) {
