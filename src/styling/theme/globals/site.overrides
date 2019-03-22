@@ -12,3 +12,7 @@ footer {
 body {
     overflow-y: scroll;
 }
+
+.ui.card .heart:hover {
+    color: @red !important;
+}
