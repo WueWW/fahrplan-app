@@ -94,21 +94,23 @@ class Session extends React.Component<Props, State> {
                 {this.state.expanded && !this.props.cancelled && <LocationBlock location={this.props.location} />}
 
                 <Card.Content extra>
-                    <Icon
-                        className="right floated"
-                        name={this.props.isFavorite ? 'heart' : 'heart outline'}
-                        color={this.props.isFavorite ? 'red' : undefined}
-                        onClick={this.props.onToggleFavorite}
-                        style={{ cursor: 'pointer' }}
-                    />
+                    {(this.props.isFavorite || !this.props.cancelled) && (
+                        <Icon
+                            className="right floated"
+                            name={this.props.isFavorite ? 'heart' : 'heart outline'}
+                            color={this.props.isFavorite ? 'red' : undefined}
+                            onClick={this.props.onToggleFavorite}
+                            style={{ cursor: 'pointer' }}
+                        />
+                    )}
                     {this.eventUrl() && (
-                        <a href={this.eventUrl()}>
-                            <Icon className="right floated" name="linkify" style={{ cursor: 'pointer' }} />
+                        <a className="event-link right floated" href={this.eventUrl()}>
+                            <Icon name="linkify" style={{ cursor: 'pointer' }} />
                         </a>
                     )}
                     {this.eventEmail() && (
-                        <a href={`mailto:${this.eventEmail()}`}>
-                            <Icon className="right floated" name="mail" style={{ cursor: 'pointer' }} />
+                        <a className="event-link right floated" href={`mailto:${this.eventEmail()}`}>
+                            <Icon name="mail" style={{ cursor: 'pointer' }} />
                         </a>
                     )}
                     <Icon name="clock outline" />
