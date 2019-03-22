@@ -1,8 +1,8 @@
 import React, { FunctionComponent } from 'react';
 import { Card, Icon } from 'semantic-ui-react';
 
-import { Location } from '../../model/Session';
-import { isAndroidDevice, isAppleDevice, isMobileDevice } from '../../util/mobile';
+import { Location } from '../../../model/Session';
+import { isAndroidDevice, isAppleDevice, isMobileDevice } from '../../../util/mobile';
 
 export interface Props {
     location?: Location;

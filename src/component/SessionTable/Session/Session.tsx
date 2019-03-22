@@ -4,7 +4,7 @@ import React from 'react';
 import { Card, Icon, Label } from 'semantic-ui-react';
 
 import { Session as SessionType } from '../../../model/Session';
-import LocationBlock from '../LocationBlock';
+import LocationBlock from './LocationBlock';
 
 export interface Props extends SessionType {
     isFavorite: boolean;
