@@ -1,7 +1,7 @@
 import React from 'react';
 import { Dropdown, Icon, Segment } from 'semantic-ui-react';
 
-import { formatDate } from '../util/DateUtil';
+import { formatDate } from '../util/dateUtil';
 
 export interface Props {
     options: string[];

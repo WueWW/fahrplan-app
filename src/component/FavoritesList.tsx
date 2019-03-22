@@ -4,7 +4,7 @@ import { Icon, Message } from 'semantic-ui-react';
 import { FavManagerProps } from '../component/FavManager';
 import SessionTable from '../component/SessionTable';
 import { Session, SessionList } from '../model/Session';
-import { formatDate } from '../util/DateUtil';
+import { formatDate } from '../util/dateUtil';
 
 export interface Props extends FavManagerProps {
     sessions: SessionList;
