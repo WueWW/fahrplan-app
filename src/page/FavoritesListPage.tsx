@@ -3,8 +3,8 @@ import { Button } from 'semantic-ui-react';
 
 import FavoritesList, { Props } from '../component/FavoritesList';
 import Footer from '../component/Footer';
-import generateIcal from '../icalExport';
 import { SessionList } from '../model/Session';
+import generateIcal from '../util/icalExport';
 import { isAppleStandalone } from '../util/mobile';
 
 const downloadIcalFile = (sessions: SessionList) => {

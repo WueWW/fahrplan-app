@@ -1,6 +1,6 @@
 import icalGenerator from 'ical-generator';
 
-import { SessionList } from './model/Session';
+import { SessionList } from '../model/Session';
 
 const generateIcal = (sessions: SessionList): string => {
     const cal = icalGenerator({ domain: 'app.wueww.de', name: 'WueWW Favoriten' });
