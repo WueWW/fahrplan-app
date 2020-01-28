@@ -14,11 +14,12 @@ const SessionTable: React.FunctionComponent<Props> = props => (
         {props.sessions.sort(Session.startTimeComparator).map(session => {
             return (
                 <DisplaySession
+                    key={session.id}
                     {...session}
-                    isFavorite={props.favorites.includes(session.key)}
+                    isFavorite={props.favorites.includes(session.id)}
                     onToggleFavorite={
-                        props.favorites.includes(session.key)
-                            ? () => props.removeFavorite(session.key)
+                        props.favorites.includes(session.id)
+                            ? () => props.removeFavorite(session.id)
                             : () => props.addFavorite(session)
                     }
                 />

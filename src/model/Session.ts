@@ -1,28 +1,40 @@
 export interface Location {
     name: string;
+    streetNo: string;
+    zipcode: string;
+    city: string;
     lat?: number;
     lng?: number;
 }
 
 export interface Session {
-    key: string;
+    id: number;
     start: string;
     end: string | null;
-    cancelled?: boolean;
+    cancelled: boolean;
     host: {
+        id: number;
         name: string;
         infotext?: string;
+        logo?: string;
+        links?: {
+            host?: string;
+            facebook?: string;
+            twitter?: string;
+            youtube?: string;
+            instagram?: string;
+            xing?: string;
+            linkedIn?: string;
+        };
     };
     title: string;
-    location?: Location;
+    location: Location;
     description?: {
         short?: string;
         long?: string;
     };
-    tags?: string[];
     links?: {
         event?: string;
-        host?: string;
     };
 }
 
@@ -35,10 +47,10 @@ export function isSession(session: any): session is Session {
     }
 
     return (
-        typeof session.key === 'string' &&
+        typeof session.id === 'number' &&
         typeof session.start === 'string' &&
         (typeof session.end === 'string' || session.end === null) &&
-        (typeof session.cancelled === 'boolean' || session.cancelled === undefined) &&
+        typeof session.cancelled === 'boolean' &&
         typeof session.host === 'object' &&
         session.host !== undefined &&
         typeof session.host.name === 'string' &&

@@ -18,7 +18,7 @@ import SessionViewer from './page/SessionViewer';
 
 export interface Props {}
 
-const SESSION_DATA_URL = 'https://wueww.github.io/fahrplan-2019/sessions.json';
+const SESSION_DATA_URL = 'https://backend.timetable.wueww.de/export/session.json';
 const updatesChannel = typeof BroadcastChannel !== 'undefined' && new BroadcastChannel('session-updates');
 
 const PageToggleWithRouter = withRouter(PageToggleButton);

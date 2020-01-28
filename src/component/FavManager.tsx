@@ -1,34 +1,24 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 
-import { isSession, Session } from '../model/Session';
+import { Session } from '../model/Session';
 
 export interface Props {
     children: (fav: FavManagerProps) => React.ReactElement<any>;
 }
 
-type FavList = string[];
+type FavList2020 = number[];
 
-function isFavList(data: any): data is FavList {
-    return Array.isArray(data) && data.every(x => typeof x === 'string');
-}
-
-type LegacyFavFormat = { [sessionKey: string]: Session };
-
-function isLegacyFavFormat(data: any): data is LegacyFavFormat {
-    if (typeof data !== 'object') {
-        return false;
-    }
-
-    return Object.keys(data).every(sessionKey => isSession(data[sessionKey]));
+function isFavList2020(data: any): data is FavList2020 {
+    return Array.isArray(data) && data.every(x => typeof x === 'number');
 }
 
 export interface State {
-    favorites: FavList;
+    favorites: FavList2020;
 }
 
 export interface FavManagerProps extends State {
     addFavorite: (session: Session) => void;
-    removeFavorite: (sessionKey: string) => void;
+    removeFavorite: (sessionId: number) => void;
 }
 
 class FavManager extends Component<Props, State> {
@@ -41,10 +31,8 @@ class FavManager extends Component<Props, State> {
         try {
             const storeData = JSON.parse(localStorage.favorites);
 
-            if (isFavList(storeData)) {
+            if (isFavList2020(storeData)) {
                 this.state = { favorites: storeData };
-            } else if (isLegacyFavFormat(storeData)) {
-                this.state = { favorites: Object.keys(storeData) };
             } else {
                 throw new Error('invalid fav state');
             }
@@ -61,13 +49,13 @@ class FavManager extends Component<Props, State> {
 
     addFavorite(session: Session) {
         this.setState(state => {
-            return this.commit({ favorites: [...state.favorites, session.key] });
+            return this.commit({ favorites: [...state.favorites, session.id] });
         });
     }
 
-    removeFavorite(sessionKey: string) {
+    removeFavorite(sessionId: number) {
         this.setState(state => {
-            return this.commit({ favorites: state.favorites.filter(x => x !== sessionKey) });
+            return this.commit({ favorites: state.favorites.filter(x => x !== sessionId) });
         });
     }
 

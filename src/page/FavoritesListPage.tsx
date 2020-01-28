@@ -23,7 +23,7 @@ const FavoritesListPage: FunctionComponent<Props> = props => (
                 icon="calendar alternate outline"
                 content="in Kalender exportieren"
                 onClick={() => {
-                    downloadIcalFile(props.sessions.filter(session => props.favorites.includes(session.key)));
+                    downloadIcalFile(props.sessions.filter(session => props.favorites.includes(session.id)));
                 }}
             />
         )}

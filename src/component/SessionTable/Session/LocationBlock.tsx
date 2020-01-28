@@ -31,22 +31,17 @@ const LocationBlock: FunctionComponent<Props> = ({ location }) => {
         return null;
     }
 
-    const parts = location.name
-        .split(/\n/)
-        .map((x: string) => x.trim())
-        .filter((x: string) => x);
-
     return (
         <Card.Content extra>
             <Card.Description>
                 <Icon className="left floated" name="globe" />
                 <div style={distanceDivStyle}>
                     <a href={geoLink(location)} target={isMobileDevice() ? undefined : '_blank'}>
-                        {parts[0]}
+                        {location.name}
                     </a>
                 </div>
                 <div className="meta" style={distanceDivStyle}>
-                    {parts.slice(1).join(', ')}
+                    {location.streetNo}, {location.zipcode} {location.city}
                 </div>
             </Card.Description>
         </Card.Content>

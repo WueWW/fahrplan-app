@@ -7,7 +7,7 @@ const generateIcal = (sessions: SessionList): string => {
 
     sessions.forEach(session =>
         cal.createEvent({
-            uid: session.key,
+            uid: `WUEWW-2020-${session.id}`,
             start: new Date(session.start),
             end: session.end ? new Date(session.end) : undefined,
             summary: session.title,
