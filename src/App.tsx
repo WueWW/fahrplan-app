@@ -153,12 +153,15 @@ function pwaInstallPrompt(e: any) {
 
     window.removeEventListener('beforeinstallprompt', pwaInstallPrompt);
 
-    toast({
-        title: 'Fahrplan App',
-        description: 'Die Fahrplan App kann als Progressive Web App auf den Startbildschirm hinzugefügt werden',
-        time: 2500,
-        onClick: () => e.prompt(),
-    });
+    toast(
+        {
+            title: 'Fahrplan App',
+            description: 'Die Fahrplan App kann als Progressive Web App auf den Startbildschirm hinzugefügt werden',
+            time: 2500,
+        },
+        () => undefined,
+        () => e.prompt()
+    );
 }
 
 window.addEventListener('beforeinstallprompt', pwaInstallPrompt);

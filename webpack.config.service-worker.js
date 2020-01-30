@@ -4,15 +4,13 @@ module.exports = isProdBuild => {
     const options = {
         swDest: 'sw.js',
 
-        importWorkboxFrom: 'local',
-
         clientsClaim: true,
         skipWaiting: true,
 
         runtimeCaching: [
             {
                 urlPattern: 'https://backend.timetable.wueww.de/export/session.json',
-                handler: 'staleWhileRevalidate',
+                handler: 'StaleWhileRevalidate',
                 options: {
                     broadcastUpdate: { channelName: 'session-updates' },
                 },
@@ -21,10 +19,6 @@ module.exports = isProdBuild => {
     };
 
     if (!isProdBuild) {
-        // use "cdn" in case of dev-build, since the webpack-dev-server doesn't
-        // ship workbox as needed otherwise
-        options.importWorkboxFrom = 'cdn';
-
         // don't apply pre-caching (during dev) at all
         options.include = [/this-file-better-not-exists/];
     }
