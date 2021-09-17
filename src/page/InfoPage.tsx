@@ -29,7 +29,8 @@ const InfoPage: FunctionComponent = () => (
         <p>
             Diese App ist auf Datensparsamkeit ausgelegt. Von dir in der App gemachte persönliche Einstellungen (z.B.
             gewählte Favoriten) werden ausschließlich lokal in deinem Browser abgelegt und nicht an den Server
-            übertragen. Die App wird über GitHub Pages veröffentlicht, von dritter Seite werden keine Daten abgerufen.
+            übertragen. Die App wird über GitHub Pages veröffentlicht und bezieht ihre Daten direkt vom Veranstaltertool
+            der WueWW. Von dritter Seite werden keine Daten abgerufen.
         </p>
 
         <Header>Impressum</Header>
@@ -40,7 +41,7 @@ const InfoPage: FunctionComponent = () => (
             <br />
             E-Mail: <a href="mailto:stesie@brokenpipe.de">stesie@brokenpipe.de</a>
             <br />
-            Twitter: <a href="https://twitter.com/stesie23">@stesie23</a>
+            wue.social: <a href="https://wue.social/@rolf">@rolf</a>
         </p>
     </div>
 );
