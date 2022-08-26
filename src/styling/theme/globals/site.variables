@@ -1,1 +1,5 @@
 @importGoogleFonts : false;
+
+@linkColor         : #dc1e7d;
+@red               : #dc1e7d;
+
