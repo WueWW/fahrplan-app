@@ -1,9 +1,7 @@
 import 'react-semantic-toasts/styles/react-semantic-alert.css';
 
 import React, { Component, Fragment } from 'react';
-import {
-    HashRouter as Router, Route, RouteComponentProps, Switch, withRouter
-} from 'react-router-dom';
+import { HashRouter as Router, Route, RouteComponentProps, Switch, withRouter } from 'react-router-dom';
 import { SemanticToastContainer, toast } from 'react-semantic-toasts';
 
 import FavManager from './component/FavManager';
@@ -104,44 +102,42 @@ class App extends Component<Props, AppState> {
     render() {
         return (
             <Router>
-                <Fragment>
-                    <Layout
-                        Header={
-                            <>
-                                <PageToggleWithRouter />
-                                <Header />
-                            </>
-                        }
-                    >
-                        <InitStatusIndicatorOrApp {...this.state}>
-                            {sessions => (
-                                <FavManager>
-                                    {fav => (
-                                        <Switch>
-                                            <Route path="/impressum" component={() => <InfoPage />} />
-                                            <Route
-                                                path="/favorites"
-                                                component={() => <FavoritesListPage {...fav} sessions={sessions} />}
-                                            />
-                                            <Route
-                                                path="/:date?"
-                                                render={(route: RouteComponentProps<any>) => (
-                                                    <SessionViewer
-                                                        {...fav}
-                                                        {...route}
-                                                        selectedDate={route.match.params.date}
-                                                        sessions={sessions}
-                                                    />
-                                                )}
-                                            />
-                                        </Switch>
-                                    )}
-                                </FavManager>
-                            )}
-                        </InitStatusIndicatorOrApp>
-                        <SemanticToastContainer position="bottom-center" />
-                    </Layout>
-                </Fragment>
+                <Layout
+                    Header={
+                        <>
+                            <PageToggleWithRouter />
+                            <Header />
+                        </>
+                    }
+                >
+                    <InitStatusIndicatorOrApp {...this.state}>
+                        {(sessions) => (
+                            <FavManager>
+                                {(fav) => (
+                                    <Switch>
+                                        <Route path="/impressum" component={() => <InfoPage />} />
+                                        <Route
+                                            path="/favorites"
+                                            component={() => <FavoritesListPage {...fav} sessions={sessions} />}
+                                        />
+                                        <Route
+                                            path="/:date?"
+                                            render={(route: RouteComponentProps<any>) => (
+                                                <SessionViewer
+                                                    {...fav}
+                                                    {...route}
+                                                    selectedDate={route.match.params.date}
+                                                    sessions={sessions}
+                                                />
+                                            )}
+                                        />
+                                    </Switch>
+                                )}
+                            </FavManager>
+                        )}
+                    </InitStatusIndicatorOrApp>
+                    <SemanticToastContainer position="bottom-center" />
+                </Layout>
             </Router>
         );
     }
