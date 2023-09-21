@@ -1,4 +1,4 @@
-FROM node:lts-alpine as builder
+FROM node:16-alpine3.18 as builder
 
 ADD / /app
 WORKDIR /app
